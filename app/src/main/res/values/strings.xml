@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">MeteoApp</string>
+    <string name="button">Button</string>
+    <string name="hint">hint</string>
+    <string name="textView">text</string>
+    <string name="text">2</string>
+    <string name="_1">1</string>
+    <string name="autocompletetextview">cerca</string>
+</resources>
