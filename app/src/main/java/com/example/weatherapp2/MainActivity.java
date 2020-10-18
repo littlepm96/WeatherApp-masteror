@@ -32,8 +32,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.DecimalFormat;
 
-//ok
-
 public class MainActivity extends AppCompatActivity {
 
     AutoCompleteTextView cityName;
