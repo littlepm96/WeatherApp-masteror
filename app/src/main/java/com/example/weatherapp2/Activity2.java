@@ -19,6 +19,8 @@ import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class Activity2 extends AppCompatActivity {
     public  String  loadFromRaw(){
@@ -105,7 +107,12 @@ public class Activity2 extends AppCompatActivity {
         cities.add(m);
         cities.add(r);
         cities.add(t);
-
+        Collections.sort(city, new Comparator<String>() {
+            @Override
+            public int compare(String o1, String o2) {
+                return o1.toString().compareTo(o2.toString());
+            }
+        });
         RecyclerView recyclerView =findViewById(R.id.view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(new adapter(city));
