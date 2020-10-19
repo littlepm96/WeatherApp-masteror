@@ -9,21 +9,20 @@ import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -31,6 +30,10 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.DecimalFormat;
+
+import java.util.ArrayList;
+
+
 
 
 //no
@@ -40,6 +43,45 @@ public class MainActivity extends AppCompatActivity {
     AutoCompleteTextView cityName;
     Button searchButton;
     TextView result;
+
+    public String loadJSONFromAsset() {
+        String json = null;
+        try {
+            InputStream is = getResources().openRawResource(R.raw.city);//option- in city ci sono 43MB di città di tutto il mondo
+            int size = is.available();                                  //filtrate per Paese(it). il file ez.json contiene solo quelle italiane
+            byte[] buffer = new byte[size];                             //più qualche errore ma è molto meno ingombrante(in caso si ricrea meglio)
+            is.read(buffer);                                            //al momento è in uso City. se si cambia in ez è molto più veloce
+            is.close();
+            json = new String(buffer, "UTF-8");
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+        return json;
+    }
+
+
+    public ArrayList<String> arrayListLoad(ArrayList z){
+
+    try {
+        JSONArray array = new JSONArray(loadJSONFromAsset());
+
+        for (int i=0;i< array.length();i++){
+            JSONObject cit = array.getJSONObject(i);
+            if(!(cit.get("country").toString().equals("IT"))) {}
+            else z.add((String) cit.get("name")); }
+
+
+
+
+
+    } catch (JSONException e) {
+        e.printStackTrace();
+    }
+return z;
+
+}
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -69,9 +111,7 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private static final String[] c = new String[] {
-            "Belgium", "France", "Italy", "Germany","Rieti","Avezzano", "Spain"
-    };
+
 
 
     class Weather extends AsyncTask<String,Void,String>{  //First String means URL is in String, Void mean nothing, Third String means Return type will be String
@@ -124,6 +164,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
     public void search(View view){
         cityName = findViewById(R.id.Ab);
         searchButton = findViewById(R.id.searchButton);
@@ -136,7 +177,7 @@ public class MainActivity extends AppCompatActivity {
         String content;
         Weather weather = new Weather();
         try {
-            //cLondon,uk&APPID=5dde592a280bd928166a6bc8d93ccc53
+
 
             content = weather.execute("http://api.openweathermap.org/data/2.5/weather?q=" +
                     cName+"&APPID=5dde592a280bd928166a6bc8d93ccc53").get();
@@ -200,17 +241,13 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
+    ArrayList<String> c=new ArrayList<>();
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_dropdown_item_1line, c);
+                android.R.layout.simple_dropdown_item_1line, arrayListLoad(c));
        AutoCompleteTextView auto = (AutoCompleteTextView) findViewById(R.id.Ab);
 
 
-
         auto.setAdapter(adapter);
-
-
-
 
 
 
