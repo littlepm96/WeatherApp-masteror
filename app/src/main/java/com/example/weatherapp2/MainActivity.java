@@ -32,6 +32,9 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.DecimalFormat;
 
+
+//DIO è una persona particolare, come marco del resto...
+
 public class MainActivity extends AppCompatActivity {
 
     AutoCompleteTextView cityName;
