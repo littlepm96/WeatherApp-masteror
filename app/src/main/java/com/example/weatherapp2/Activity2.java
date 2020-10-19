@@ -51,8 +51,6 @@ public class Activity2 extends AppCompatActivity {
 
 
 
-
-
         return  jsonString;
     }
 
@@ -87,26 +85,12 @@ public class Activity2 extends AppCompatActivity {
             else city.add((String) cit.get("name")); }
 
 
-
-
-
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
 
-        ArrayList<String> cities =new ArrayList<>();
-        String a=new String("rrr");
-        String c = new String("su");
-        String m = new String( "suino");
-        String r = new String( "su");
-        String t = new String("molise'nt");
 
-        cities.add(a);
-        cities.add(c);
-        cities.add(m);
-        cities.add(r);
-        cities.add(t);
         Collections.sort(city, new Comparator<String>() {
             @Override
             public int compare(String o1, String o2) {

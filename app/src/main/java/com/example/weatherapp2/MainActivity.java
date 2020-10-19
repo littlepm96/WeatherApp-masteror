@@ -244,11 +244,7 @@ return z;
        AutoCompleteTextView auto = (AutoCompleteTextView) findViewById(R.id.Ab);
 
 
-
         auto.setAdapter(adapter);
-
-
-
 
 
 
