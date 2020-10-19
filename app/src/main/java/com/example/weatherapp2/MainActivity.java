@@ -30,13 +30,10 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.DecimalFormat;
-<<<<<<< HEAD
-=======
+
+
 import java.util.ArrayList;
->>>>>>> origin/PP
 
-
-//no
 
 public class MainActivity extends AppCompatActivity {
 
