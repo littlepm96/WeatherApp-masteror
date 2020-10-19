@@ -32,6 +32,9 @@ import java.net.URL;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
+
+//no
+
 public class MainActivity extends AppCompatActivity {
 
     AutoCompleteTextView cityName;
