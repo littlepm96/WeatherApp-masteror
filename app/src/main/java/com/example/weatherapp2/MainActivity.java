@@ -33,7 +33,7 @@ import java.net.URL;
 import java.text.DecimalFormat;
 
 
-//DIO è una persona particolare, come marco del resto...
+//no
 
 public class MainActivity extends AppCompatActivity {
 
