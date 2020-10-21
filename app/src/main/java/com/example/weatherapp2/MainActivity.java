@@ -34,8 +34,6 @@ import java.text.DecimalFormat;
 
 import java.util.ArrayList;
 
-//ci siamo finalmente
-
 public class MainActivity extends AppCompatActivity {
 
     AutoCompleteTextView cityName;
