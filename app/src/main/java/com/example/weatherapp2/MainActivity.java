@@ -6,6 +6,8 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
+import android.support.annotation.RequiresPermission;
+import android.support.annotation.RequiresPermission.Write;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -24,6 +26,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -50,6 +54,20 @@ public class MainActivity extends AppCompatActivity {
     Button searchButton;
     TextView result;
 
+    //Method for writing data to text file
+    private void saveMessageIntoSDCard(File savedFile, String messageBody) {
+        try {
+
+            //File writer is used for writing data
+            FileWriter fWriter = new FileWriter(savedFile);
+            fWriter.write(messageBody);//write data
+            fWriter.flush();//flush writer
+            fWriter.close();//close writer
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     public String loadJSONFromAsset() {
         String json = null;
         try {
@@ -206,8 +224,58 @@ return z;
             String weatherData = jsonObject.getString("weather");
             String mainTemperature = jsonObject.getString("main"); //this main is not part of weather array, it's seperate variable like weather
             double visibility;
-//          Log.i("weatherData",weatherData);
-            //weather data is in Array
+/*
+
+String MY_FILE_NAME = “mytextfile.txt”;
+// Create a new output file stream
+FileOutputStream fileos = openFileOutput(MY_FILE_NAME, Context.MODE_PRIVATE);
+// Create a new file input stream.
+FileInputStream fileis = openFileInput(My_FILE_NAME);
+-----------------------------------------------------------------------------
+public void Read(){
+static final int READ_BLOCK_SIZE = 100;
+try {
+            FileInputStream fileIn=openFileInput("mytextfile.txt");
+            InputStreamReader InputRead= new InputStreamReader(fileIn);
+
+            char[] inputBuffer= new char[READ_BLOCK_SIZE];
+            String s="";
+            int charRead;
+
+            while ((charRead=InputRead.read(inputBuffer))>0) {
+                // char to string conversion
+                String readstring=String.copyValueOf(inputBuffer,0,charRead);
+                s +=readstring;
+            }
+            InputRead.close();
+            Toast.makeText(getBaseContext(), s,Toast.LENGTH_SHORT).show();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+}
+---------------------------------------------------------------------
+public void Write(){
+try {
+        FileOutputStream fileout=openFileOutput("mytextfile.txt", MODE_PRIVATE);
+        OutputStreamWriter outputWriter=new OutputStreamWriter(fileout);
+        outputWriter.write("TEST STRING..");
+        outputWriter.close();
+
+        //display file saved message
+        Toast.makeText(getBaseContext(), "File saved successfully!",
+        Toast.LENGTH_SHORT).show();
+
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+
+}
+
+also if you are not in Activity ...you have to write getApplicationContext() before openFile
+---------------------------------------------------------------------------------------
+
+            */
             JSONArray array = new JSONArray(weatherData);
 
             String main = "";
