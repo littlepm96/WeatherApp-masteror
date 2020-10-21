@@ -8,8 +8,8 @@
 
     <TextView
         android:id="@+id/city"
-        android:layout_width="409dp"
-        android:layout_height="40dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:text="@string/City"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
