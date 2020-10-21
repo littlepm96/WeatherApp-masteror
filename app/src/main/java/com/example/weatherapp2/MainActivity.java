@@ -36,12 +36,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.DecimalFormat;
 
+
 import java.util.ArrayList;
-
-
-
-
-//no
 
 public class MainActivity extends AppCompatActivity {
 
@@ -123,8 +119,8 @@ return z;
                 break;
 
             case R.id.preferiti:
-                String s = "ferraccio";
-                Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
+              //  String s = "ferraccio";
+              //  Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(this, Activity2.class);
                 startActivity(intent);
                 break;
@@ -212,8 +208,6 @@ return z;
         String content;
         Weather weather = new Weather();
         try {
-
-
             content = weather.execute("http://api.openweathermap.org/data/2.5/weather?q=" +
                     cName+"&APPID=5dde592a280bd928166a6bc8d93ccc53").get();
             //First we will check data is retrieve successfully or not
@@ -224,6 +218,7 @@ return z;
             String weatherData = jsonObject.getString("weather");
             String mainTemperature = jsonObject.getString("main"); //this main is not part of weather array, it's seperate variable like weather
             double visibility;
+
 /*
 
 String MY_FILE_NAME = “mytextfile.txt”;
@@ -276,6 +271,9 @@ also if you are not in Activity ...you have to write getApplicationContext() bef
 ---------------------------------------------------------------------------------------
 
             */
+            //Log.i("weatherData",weatherData);
+            //weather data is in Array
+          
             JSONArray array = new JSONArray(weatherData);
 
             String main = "";
