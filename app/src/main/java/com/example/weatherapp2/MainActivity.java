@@ -33,7 +33,8 @@ import java.text.DecimalFormat;
 
 
 import java.util.ArrayList;
-//ciau non funziona
+
+//ci siamo finalmente
 
 public class MainActivity extends AppCompatActivity {
 
