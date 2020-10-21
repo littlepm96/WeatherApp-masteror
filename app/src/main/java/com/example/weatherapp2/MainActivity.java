@@ -16,6 +16,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,6 +41,11 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
+
+    public static String EXTRA_MESSAGE="com.example.weatherapp2";
+
+
+
     AutoCompleteTextView cityName;
     Button searchButton;
     TextView result;
@@ -47,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
     public String loadJSONFromAsset() {
         String json = null;
         try {
-            InputStream is = getResources().openRawResource(R.raw.city);//option- in city ci sono 43MB di città di tutto il mondo
+            InputStream is = getResources().openRawResource(R.raw.ez);//option- in city ci sono 43MB di città di tutto il mondo
             int size = is.available();                                  //filtrate per Paese(it). il file ez.json contiene solo quelle italiane
             byte[] buffer = new byte[size];                             //più qualche errore ma è molto meno ingombrante(in caso si ricrea meglio)
             is.read(buffer);                                            //al momento è in uso City. se si cambia in ez è molto più veloce
@@ -111,7 +117,18 @@ return z;
         return super.onOptionsItemSelected(item);
     }
 
+    public void next(View view) {
+        String s = "3";
+        Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(this, Activity3.class);
 
+        EditText editText = (EditText) findViewById(R.id.Ab);
+        String message = editText.getText().toString();
+        intent.putExtra(EXTRA_MESSAGE, message);
+
+
+        startActivity(intent);
+    }
 
 
     class Weather extends AsyncTask<String,Void,String>{  //First String means URL is in String, Void mean nothing, Third String means Return type will be String

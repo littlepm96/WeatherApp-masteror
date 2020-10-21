@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.util.Xml;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -97,6 +98,7 @@ public class Activity2 extends AppCompatActivity {
                 return o1.toString().compareTo(o2.toString());
             }
         });
+
         RecyclerView recyclerView =findViewById(R.id.view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(new adapter(city));
