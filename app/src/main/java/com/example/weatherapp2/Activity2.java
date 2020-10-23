@@ -1,11 +1,13 @@
 package com.example.weatherapp2;
 
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.util.Xml;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -77,7 +79,10 @@ public class Activity2 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_2);
         ArrayList<String> city=new ArrayList<>();
-        try {
+
+        //ELIIMNARE I COMMENTI PER RICALCOLARE LA RECYCLE VIEW
+
+      /*  try {
             JSONArray array = new JSONArray(loadJSONFromAsset());
 
             for (int i=0;i< array.length();i++){
@@ -89,8 +94,28 @@ public class Activity2 extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+                */
 
+                              //DATABASE
 
+        GestioneDB db = new GestioneDB(this);
+
+        db.open();
+        long id = db.inserisciPreferito("ferro vecchio", "Via truzzo");
+        db.close();
+
+        db.open();
+        Cursor c = db.ottieniTuttiPreferiti();
+        if (c.moveToFirst()) {
+            do {
+                city.add(c.getString(1)); //Legge la città inserita testualmente
+                Toast.makeText(this, "id: " + c.getString(0) + "\n" +
+                                "Nome: " + c.getString(1) + "\n" +
+                                "Indirizzo: " + c.getString(2),
+                        Toast.LENGTH_LONG).show();
+            } while (c.moveToNext());
+        }
+        db.close();
 
         Collections.sort(city, new Comparator<String>() {
             @Override
@@ -99,13 +124,11 @@ public class Activity2 extends AppCompatActivity {
             }
         });
 
+        //FINE DB
+
         RecyclerView recyclerView =findViewById(R.id.view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(new adapter(city));
+        recyclerView.setAdapter(new adapter(city)); //Usato per il nome della città
     };
-
-
-
-
 
 }

@@ -6,8 +6,6 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
-import android.support.annotation.RequiresPermission;
-import android.support.annotation.RequiresPermission.Write;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -83,24 +81,24 @@ public class MainActivity extends AppCompatActivity {
 
     public ArrayList<String> arrayListLoad(ArrayList z){
 
-    try {
-        JSONArray array = new JSONArray(loadJSONFromAsset());
+        try {
+            JSONArray array = new JSONArray(loadJSONFromAsset());
 
-        for (int i=0;i< array.length();i++){
-            JSONObject cit = array.getJSONObject(i);
-            if(!(cit.get("country").toString().equals("IT"))) {}
-            else z.add((String) cit.get("name")); }
-
-
+            for (int i=0;i< array.length();i++){
+                JSONObject cit = array.getJSONObject(i);
+                if(!(cit.get("country").toString().equals("IT"))) {}
+                else z.add((String) cit.get("name")); }
 
 
 
-    } catch (JSONException e) {
-        e.printStackTrace();
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return z;
+
     }
-return z;
-
-}
 
 
     @Override
@@ -119,13 +117,11 @@ return z;
                 break;
 
             case R.id.preferiti:
-              //  String s = "ferraccio";
-              //  Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
+                //  String s = "ferraccio";
+                //  Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(this, Activity2.class);
                 startActivity(intent);
                 break;
-
-
 
         }
         return super.onOptionsItemSelected(item);
@@ -273,7 +269,7 @@ also if you are not in Activity ...you have to write getApplicationContext() bef
             */
             //Log.i("weatherData",weatherData);
             //weather data is in Array
-          
+
             JSONArray array = new JSONArray(weatherData);
 
             String main = "";
@@ -324,16 +320,13 @@ also if you are not in Activity ...you have to write getApplicationContext() bef
 
 
 
-    ArrayList<String> c=new ArrayList<>();
+        ArrayList<String> c=new ArrayList<>();
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_dropdown_item_1line, arrayListLoad(c));
-       AutoCompleteTextView auto = (AutoCompleteTextView) findViewById(R.id.Ab);
+        AutoCompleteTextView auto = (AutoCompleteTextView) findViewById(R.id.Ab);
 
 
         auto.setAdapter(adapter);
-
-
-
 
     }
 }
