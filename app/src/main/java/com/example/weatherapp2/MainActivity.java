@@ -191,33 +191,6 @@ public class MainActivity extends AppCompatActivity {
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
-
-
-
-
-    public void search(View view){
-        cityName = findViewById(R.id.Ab);
-        searchButton = findViewById(R.id.searchButton);
-        result = findViewById(R.id.resut);
-
-        String cName = cityName.getText().toString();
-
-        Log.d("qua", "search:"+cName);
-
-        String content;
-        Weather weather = new Weather();
-        try {
-            content = weather.execute("http://api.openweathermap.org/data/2.5/weather?q=" +
-                    cName+"&APPID=5dde592a280bd928166a6bc8d93ccc53").get();
-            //First we will check data is retrieve successfully or not
-            Log.d("contentData",content);
-
-            //JSON
-            JSONObject jsonObject = new JSONObject(content);
-            String weatherData = jsonObject.getString("weather");
-            String mainTemperature = jsonObject.getString("main"); //this main is not part of weather array, it's seperate variable like weather
-            double visibility;
-
 /*
 
 String MY_FILE_NAME = “mytextfile.txt”;
@@ -270,8 +243,35 @@ also if you are not in Activity ...you have to write getApplicationContext() bef
 ---------------------------------------------------------------------------------------
 
             */
-            //Log.i("weatherData",weatherData);
-            //weather data is in Array
+    //Log.i("weatherData",weatherData);
+    //weather data is in Array
+
+
+
+    public void search(View view){
+        cityName = findViewById(R.id.Ab);
+        searchButton = findViewById(R.id.searchButton);
+        result = findViewById(R.id.resut);
+
+        String cName = cityName.getText().toString();
+
+        Log.d("qua", "search:"+cName);
+
+        String content;
+        Weather weather = new Weather();
+        try {
+            content = weather.execute("http://api.openweathermap.org/data/2.5/weather?q=" +
+                    cName+"&APPID=fc87ff947ff79d8e26cc89dc744d00bc").get();
+            //First we will check data is retrieve successfully or not
+            Log.d("contentData",content);
+
+            //JSON
+            JSONObject jsonObject = new JSONObject(content);
+            String weatherData = jsonObject.getString("weather");
+            String mainTemperature = jsonObject.getString("main"); //this main is not part of weather array, it's seperate variable like weather
+            double visibility;
+
+
 
             JSONArray array = new JSONArray(weatherData);
 
