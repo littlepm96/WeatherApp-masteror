@@ -143,7 +143,7 @@ public class Activity3 extends AppCompatActivity {
                 t =Double.parseDouble(new DecimalFormat("##.##").format(t));
 
 
-                meteo j =new meteo(data,description,t);
+                meteo j =new meteo(data,description,String.valueOf(t));
 
                 city.add(j);
 

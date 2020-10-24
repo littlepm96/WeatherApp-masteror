@@ -3,23 +3,23 @@ package com.example.weatherapp2;
 public class meteo {
     private String data;
     private String meteo;
-    private double temp;
+    private String temp;
 
     public meteo() {
     }
 
-    public meteo(String data, String meteo,double temp) {
+    public meteo(String data, String meteo,String  temp) {
         this.data = data;
         this.meteo= meteo;
         this.temp= temp;
 
     }
 
-    public double getTemp() {
+    public String  getTemp() {
         return temp;
     }
 
-    public void setTemp(long temp) {
+    public void setTemp(String temp) {
         this.temp = temp;
     }
 
