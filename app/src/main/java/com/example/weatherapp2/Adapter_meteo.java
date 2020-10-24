@@ -32,6 +32,7 @@ public class Adapter_meteo extends RecyclerView.Adapter<Adapter_meteo.ViewHolder
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
         viewHolder.data.setText((String)meteo.get(i).getData());
         viewHolder.meteo.setText((String)meteo.get(i).getMeteo());
+        viewHolder.temp.setText(String.valueOf(meteo.get(i).getTemp())+" C°")  ;
     }
 
     @Override
@@ -39,10 +40,10 @@ public class Adapter_meteo extends RecyclerView.Adapter<Adapter_meteo.ViewHolder
         return meteo.size();
     }
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView data;TextView meteo;
+        TextView data;TextView meteo;TextView temp;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-
+            temp=itemView.findViewById(R.id.temp);
             data= itemView.findViewById(R.id.data);
             meteo= itemView.findViewById(R.id.meteo);
 
