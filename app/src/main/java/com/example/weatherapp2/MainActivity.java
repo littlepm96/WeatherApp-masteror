@@ -45,8 +45,6 @@ public class MainActivity extends AppCompatActivity {
 
     public static String EXTRA_MESSAGE="com.example.weatherapp2";
 
-
-
     AutoCompleteTextView cityName;
     Button searchButton;
     TextView result;

@@ -1,7 +1,5 @@
 package com.example.weatherapp2;
 
-
-
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;

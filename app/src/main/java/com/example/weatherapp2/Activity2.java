@@ -30,7 +30,6 @@ public class Activity2 extends AppCompatActivity {
 
         InputStream is = getResources().openRawResource(R.raw.city);
 
-
         Writer writer = new StringWriter();
         char[] buffer = new char[1024];
         try {
@@ -58,7 +57,6 @@ public class Activity2 extends AppCompatActivity {
     }
 
 
-
     public String loadJSONFromAsset() {
         String json = null;
         try {
@@ -79,6 +77,7 @@ public class Activity2 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_2);
         ArrayList<String> city=new ArrayList<>();
+
       /*  try {
             JSONArray array = new JSONArray(loadJSONFromAsset());
 
@@ -93,10 +92,9 @@ public class Activity2 extends AppCompatActivity {
         }
 */
 
-        //DATABASE
+                         //INIZIO DATABASE
 
         GestioneDB db = new GestioneDB(this);
-
 
         db.open();
         long id = db.inserisciPreferito("ferro vecchio", "Via truzzo");
@@ -122,7 +120,7 @@ public class Activity2 extends AppCompatActivity {
             }
         });
 
-        //FINE DB
+                         //FINE DB
 
         RecyclerView recyclerView =findViewById(R.id.view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
