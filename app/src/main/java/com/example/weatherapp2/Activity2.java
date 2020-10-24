@@ -1,10 +1,13 @@
 package com.example.weatherapp2;
 
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.util.Xml;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -19,6 +22,8 @@ import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class Activity2 extends AppCompatActivity {
     public  String  loadFromRaw(){
@@ -49,8 +54,6 @@ public class Activity2 extends AppCompatActivity {
 
 
 
-
-
         return  jsonString;
     }
 
@@ -76,7 +79,7 @@ public class Activity2 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_2);
         ArrayList<String> city=new ArrayList<>();
-        try {
+      /*  try {
             JSONArray array = new JSONArray(loadJSONFromAsset());
 
             for (int i=0;i< array.length();i++){
@@ -85,34 +88,45 @@ public class Activity2 extends AppCompatActivity {
             else city.add((String) cit.get("name")); }
 
 
-
-
-
         } catch (JSONException e) {
             e.printStackTrace();
         }
+*/
+
+        //DATABASE
+
+        GestioneDB db = new GestioneDB(this);
 
 
-        ArrayList<String> cities =new ArrayList<>();
-        String a=new String("rrr");
-        String c = new String("su");
-        String m = new String( "suino");
-        String r = new String( "su");
-        String t = new String("molise'nt");
+        db.open();
+        long id = db.inserisciPreferito("ferro vecchio", "Via truzzo");
+        db.close();
 
-        cities.add(a);
-        cities.add(c);
-        cities.add(m);
-        cities.add(r);
-        cities.add(t);
+        db.open();
+        Cursor c = db.ottieniTuttiPreferiti();
+        if (c.moveToFirst()) {
+            do {
+                city.add(c.getString(1));
+                Toast.makeText(this, "id: " + c.getString(0) + "\n" +
+                                "Nome: " + c.getString(1) + "\n" +
+                                "Indirizzo: " + c.getString(2),
+                        Toast.LENGTH_LONG).show();
+            } while (c.moveToNext());
+        }
+        db.close();
+
+        Collections.sort(city, new Comparator<String>() {
+            @Override
+            public int compare(String o1, String o2) {
+                return o1.toString().compareTo(o2.toString());
+            }
+        });
+
+        //FINE DB
 
         RecyclerView recyclerView =findViewById(R.id.view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(new adapter(city));
     };
-
-
-
-
 
 }
