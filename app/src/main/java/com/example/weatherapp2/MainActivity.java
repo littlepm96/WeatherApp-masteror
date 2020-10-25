@@ -41,8 +41,6 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-//BELLO
-
     public static String EXTRA_MESSAGE="com.example.weatherapp2";
 
     AutoCompleteTextView cityName;
@@ -66,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
     public String loadJSONFromAsset() {
         String json = null;
         try {
-            InputStream is = getResources().openRawResource(R.raw.ez);//option- in city ci sono 43MB di città di tutto il mondo
+            InputStream is = getResources().openRawResource(R.raw.ez);  //option- in city ci sono 43MB di città di tutto il mondo
             int size = is.available();                                  //filtrate per Paese(it). il file ez.json contiene solo quelle italiane
             byte[] buffer = new byte[size];                             //più qualche errore ma è molto meno ingombrante(in caso si ricrea meglio)
             is.read(buffer);                                            //al momento è in uso City. se si cambia in ez è molto più veloce
@@ -101,13 +99,13 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
+                //MENÙ CONTESTUALE IN ALTO A DESTRA
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return super.onCreateOptionsMenu(menu);
     }
-
+                    //SCELTA DELLE AZIONI DEI PULSANTI INTERNO AL MENÙ
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
@@ -128,6 +126,7 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+                //CHIAMATA ALLA TERZA VIEW
     public void next(View view) {
         String s = "3";
         Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
@@ -136,8 +135,6 @@ public class MainActivity extends AppCompatActivity {
         EditText editText = (EditText) findViewById(R.id.Ab);
         String message = editText.getText().toString();
         intent.putExtra(EXTRA_MESSAGE, message);
-
-
         startActivity(intent);
     }
 
@@ -240,11 +237,10 @@ try {
 also if you are not in Activity ...you have to write getApplicationContext() before openFile
 ---------------------------------------------------------------------------------------
 
-            */
-    //Log.i("weatherData",weatherData);
-    //weather data is in Array
+    Log.i("weatherData",weatherData);
+    weather data is in Array
 
-
+ */
 
     public void search(View view){
         cityName = findViewById(R.id.Ab);
