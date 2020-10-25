@@ -39,8 +39,9 @@ public class MainActivity extends AppCompatActivity {
     public static String EXTRA_MESSAGE="com.example.weatherapp2";
 
     AutoCompleteTextView cityName;
-    Button searchButton;
+    Button searchButton, aggiungiButton;
     TextView result;
+
 
     //Method for writing data to text file
     private void saveMessageIntoSDCard(File savedFile, String messageBody) {
@@ -128,6 +129,36 @@ public class MainActivity extends AppCompatActivity {
         String message = editText.getText().toString();
         intent.putExtra(EXTRA_MESSAGE, message);
         startActivity(intent);
+    }
+
+    //Funzione che aggiunge città nell'elenco dei preferiti
+    public void addPreferiti(View view) {
+
+
+        String s = "Aggiunto ai preferiti!";
+        Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
+        //Intent intent = new Intent(this, Activity3.class);
+
+        EditText editText = (EditText) findViewById(R.id.Ab);
+        String message = editText.getText().toString();
+        // intent.putExtra(EXTRA_MESSAGE, message);
+        // startActivity(intent);
+
+        aggiungiButton = findViewById(R.id.StarButton);
+        aggiungiButton.setOnClickListener(new View.OnClickListener() {
+            GestioneDB db;
+
+            {
+                db = new GestioneDB(this);
+            }
+
+            @Override
+            public void onClick(View view) {
+                db.open();
+                long id = db.inserisciPreferito("ferro vecchio", "Via truzzo");
+                db.close();
+            }
+        });
     }
 
 
