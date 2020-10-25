@@ -142,6 +142,8 @@ public class MainActivity extends AppCompatActivity {
 
     //Funzione che aggiunge città nell'elenco dei preferiti
     public void addPreferiti(View view) {
+
+
         String s = "Aggiunto ai preferiti!";
         Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
         //Intent intent = new Intent(this, Activity3.class);
@@ -153,6 +155,12 @@ public class MainActivity extends AppCompatActivity {
 
         aggiungiButton = findViewById(R.id.StarButton);
         aggiungiButton.setOnClickListener(new View.OnClickListener() {
+            GestioneDB db;
+
+            {
+                db = new GestioneDB(this);
+            }
+
             @Override
             public void onClick(View view) {
                 db.open();
