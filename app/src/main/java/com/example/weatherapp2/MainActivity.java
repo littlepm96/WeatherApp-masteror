@@ -128,6 +128,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
                 //CHIAMATA ALLA TERZA VIEW
+
     public void next(View view) {
         String s = "3";
         Toast.makeText(this, s, Toast.LENGTH_SHORT).show();

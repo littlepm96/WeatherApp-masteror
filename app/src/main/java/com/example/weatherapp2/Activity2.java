@@ -92,13 +92,27 @@ public class Activity2 extends AppCompatActivity {
         }
 */
 
-                         //INIZIO DATABASE
+        //INIZIO DATABASE
 
         GestioneDB db = new GestioneDB(this);
 
+        //Apertura DB ed aggiunta
         db.open();
         long id = db.inserisciPreferito("ferro vecchio", "Via truzzo");
         db.close();
+
+        //Eliminare dal DB
+        //SE NECESSARIO
+/*
+        db.open();
+        boolean x = db.cancellaPreferito(0);
+        boolean y = db.cancellaPreferito(1);
+        boolean z = db.cancellaPreferito(2);
+        db.close();
+
+ */
+
+        //Apertura DB e visualizzazione del contenuto
 
         db.open();
         Cursor c = db.ottieniTuttiPreferiti();
@@ -120,7 +134,7 @@ public class Activity2 extends AppCompatActivity {
             }
         });
 
-                         //FINE DB
+        //FINE DB
 
         RecyclerView recyclerView =findViewById(R.id.view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
