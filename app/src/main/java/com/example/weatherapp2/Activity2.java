@@ -5,14 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.util.Xml;
 import android.widget.Toast;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -96,13 +89,14 @@ public class Activity2 extends AppCompatActivity {
 
         GestioneDB db = new GestioneDB(this);
 
-        //Apertura DB ed aggiunta
+                        //Apertura DB ed aggiunta
+
         db.open();
         long id = db.inserisciPreferito("ferro vecchio", "Via truzzo");
         db.close();
 
-        //Eliminare dal DB
-        //SE NECESSARIO
+                            //Eliminare dal DB
+                            //SE NECESSARIO
 /*
         db.open();
         boolean x = db.cancellaPreferito(0);
@@ -112,7 +106,7 @@ public class Activity2 extends AppCompatActivity {
 
  */
 
-        //Apertura DB e visualizzazione del contenuto
+                //Apertura DB e visualizzazione del contenuto
 
         db.open();
         Cursor c = db.ottieniTuttiPreferiti();
@@ -134,7 +128,7 @@ public class Activity2 extends AppCompatActivity {
             }
         });
 
-        //FINE DB
+                                //FINE DB
 
         RecyclerView recyclerView =findViewById(R.id.view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
