@@ -71,12 +71,6 @@ public class Activity3 extends AppCompatActivity {
         }
     }
 
-
-
-
-
-
-
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_3);
@@ -86,12 +80,7 @@ public class Activity3 extends AppCompatActivity {
         Intent intent = getIntent();
         String message = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
         TextView vi=findViewById(R.id.city);
-
-
         vi.setText(message);
-
-
-
 
         //View cityName = findViewById(R.id.Ab);
         //View searchButton = findViewById(R.id.searchButton);
@@ -113,13 +102,8 @@ public class Activity3 extends AppCompatActivity {
             JSONObject jsonObject = new JSONObject(content);
             JSONArray lista = jsonObject.getJSONArray("list");
 
-
-
             //String mainTemperature = jsonObject.getString("main"); //this main is not part of weather array, it's seperate variable like weather
             //double visibility;
-
-
-
             //JSONArray array = new JSONArray(weatherData);
 
             String data = "";
@@ -177,20 +161,6 @@ public class Activity3 extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
         RecyclerView recyclerView =findViewById(R.id.lista);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));

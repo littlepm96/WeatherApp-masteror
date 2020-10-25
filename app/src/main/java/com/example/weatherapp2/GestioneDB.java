@@ -26,7 +26,7 @@ public class GestioneDB {
     DatabaseHelper DBHelper;
     SQLiteDatabase db;
 
-    //CLASS
+                            //CLASS
 
     public GestioneDB(Context ctx) {
         this.context = ctx;

@@ -6,8 +6,6 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
-import android.support.annotation.RequiresPermission;
-import android.support.annotation.RequiresPermission.Write;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -21,11 +19,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -35,7 +31,6 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.DecimalFormat;
-
 
 import java.util.ArrayList;
 
@@ -87,10 +82,6 @@ public class MainActivity extends AppCompatActivity {
                 JSONObject cit = array.getJSONObject(i);
                 if(!(cit.get("country").toString().equals("IT"))) {}
                 else z.add((String) cit.get("name")); }
-
-
-
-
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -175,6 +166,8 @@ public class MainActivity extends AppCompatActivity {
             return null;
         }
     }
+
+                    //NASCONDE LA TASTIERA
 
     public static void hideKeyboard(Activity activity) {
         InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
@@ -266,8 +259,6 @@ also if you are not in Activity ...you have to write getApplicationContext() bef
             String mainTemperature = jsonObject.getString("main"); //this main is not part of weather array, it's seperate variable like weather
             double visibility;
 
-
-
             JSONArray array = new JSONArray(weatherData);
 
             String main = "";
@@ -316,14 +307,10 @@ also if you are not in Activity ...you have to write getApplicationContext() bef
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
-
         ArrayList<String> c=new ArrayList<>();
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_dropdown_item_1line, arrayListLoad(c));
         AutoCompleteTextView auto = (AutoCompleteTextView) findViewById(R.id.Ab);
-
-
         auto.setAdapter(adapter);
 
     }
