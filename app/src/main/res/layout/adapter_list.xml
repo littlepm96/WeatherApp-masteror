@@ -10,27 +10,27 @@
     <TextView
 
         android:id="@+id/title"
-        android:layout_width="326dp"
-        android:layout_height="48dp"
+        android:layout_width="201dp"
+        android:layout_height="46dp"
         android:padding="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.188"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
 
     </TextView>
 
     <Button
-        android:id="@+id/button"
-        android:layout_width="47dp"
-        android:layout_height="44dp"
+        android:id="@+id/Delbutton"
+        android:layout_width="97dp"
+        android:layout_height="36dp"
         android:onClick="delpreferiti"
-
-
-        android:text="@string/DEL"
+        android:text="DEL"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/title"
-
         app:layout_constraintTop_toTopOf="parent"
 
         />

@@ -74,8 +74,7 @@ public class Activity3 extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_3);
-        ArrayList<meteo> city=new ArrayList<>();
-
+        ArrayList<meteo> city = new ArrayList<>();
 
         Intent intent = getIntent();
         String message = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
@@ -123,6 +122,7 @@ public class Activity3 extends AppCompatActivity {
                 description=desc.getString("description");
 
                 /////////////////////////////////////////////////////////
+
                 double t = Double.valueOf(temperature) - 273.15;
                 String s=Double.toString(Double.parseDouble(new DecimalFormat("##.##").format(t)));
                 //t =Double.parseDouble(new DecimalFormat("##.##").format(t));

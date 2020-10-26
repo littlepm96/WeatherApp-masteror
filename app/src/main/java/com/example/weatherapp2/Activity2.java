@@ -1,11 +1,17 @@
 package com.example.weatherapp2;
 
+import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -86,26 +92,9 @@ public class Activity2 extends AppCompatActivity {
         }
 */
 
-        //INIZIO DATABASE
+                      // Creazione DATABASE
 
         GestioneDB db = new GestioneDB(this);
-
-                        //Apertura DB ed aggiunta
-/*
-        db.open();
-        long id = db.inserisciPreferito("ferro vecchio");
-        db.close();
-*/
-                            //Eliminare dal DB
-                            //SE NECESSARIO
-/*
-        db.open();
-        boolean x = db.cancellaPreferito(0);
-        boolean y = db.cancellaPreferito(1);
-        boolean z = db.cancellaPreferito(2);
-        db.close();
-
- */
 
                 //Apertura DB e visualizzazione del contenuto
 
@@ -114,12 +103,6 @@ public class Activity2 extends AppCompatActivity {
         if (c.moveToFirst()) {
             do {
                 city.add(c.getString(1));
-                /*Toast.makeText(this, "id: " + c.getString(0) + "\n" +
-                                "Nome: " + c.getString(1) + "\n" +
-                               "Indirizzo: " + c.getString(2),
-                        Toast.LENGTH_LONG).show();
-
-                 */
             } while (c.moveToNext());
         }
         db.close();
@@ -138,12 +121,16 @@ public class Activity2 extends AppCompatActivity {
         recyclerView.setAdapter(new adapter(city));
     };
 
+                //ELIMINA PREFERITO
+
     public void delpreferiti(View view) {
 
-GestioneDB db =new GestioneDB(getApplicationContext());
-db.open();
-      // Cursor cursor=db.ottieniPreferito();
-db.close();
-    }
 
+        TextView textView = (TextView) findViewById(R.id.title);
+        String message = textView.getText().toString();
+        String city = message;
+
+
+    }
 }
+

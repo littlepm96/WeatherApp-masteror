@@ -40,16 +40,19 @@ public class MainActivity extends AppCompatActivity {
     public static String EXTRA_MESSAGE="com.example.weatherapp2";
 
     AutoCompleteTextView cityName;
-    Button searchButton, aggiungiButton;
+    Button searchButton;
     TextView result;
     Context context = this;
 
 
-    //Method for writing data to text file
+                //Method for writing data to text file
+
     private void saveMessageIntoSDCard(File savedFile, String messageBody) {
+
         try {
 
             //File writer is used for writing data
+
             FileWriter fWriter = new FileWriter(savedFile);
             fWriter.write(messageBody);//write data
             fWriter.flush();//flush writer
@@ -80,8 +83,8 @@ public class MainActivity extends AppCompatActivity {
     public ArrayList<String> arrayListLoad(ArrayList z){
 
         try {
-            JSONArray array = new JSONArray(loadJSONFromAsset());
 
+            JSONArray array = new JSONArray(loadJSONFromAsset());
             for (int i=0;i< array.length();i++){
                 JSONObject cit = array.getJSONObject(i);
                 if(!(cit.get("country").toString().equals("IT"))) {}
@@ -95,6 +98,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
                 //MENÙ CONTESTUALE IN ALTO A DESTRA
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
@@ -133,29 +137,20 @@ public class MainActivity extends AppCompatActivity {
         String message = editText.getText().toString();
         intent.putExtra(EXTRA_MESSAGE, message);
 
-        startActivity(intent);hideKeyboard(this);
+        startActivity(intent);
+        hideKeyboard(this);
     }
 
-    //Funzione che aggiunge città nell'elenco dei preferiti
+                //AGGIUNGI A PREFERITI
+
     public void addPreferiti(View view) {
-
-
-        //Intent intent = new Intent(this, Activity3.class);
-
         EditText editText = (EditText) findViewById(R.id.Ab);
         String message = editText.getText().toString();
-        // intent.putExtra(EXTRA_MESSAGE, message);
-        // startActivity(intent);
-
-
-
 
             GestioneDB db = new GestioneDB(context);
-
                 db.open();
                 String city = message;
                 if (!(city.equals(""))){
-                    Log.d("gesù", "onClick: else ");
                     long id = db.inserisciPreferito(message);
                     String s = "Aggiunto ai preferiti!";
                     Toast.makeText(context, s, Toast.LENGTH_SHORT).show();
@@ -268,6 +263,8 @@ also if you are not in Activity ...you have to write getApplicationContext() bef
     weather data is in Array
 
  */
+
+                            //METODO PER LA RICERCA
 
     public void search(View view){
         cityName = findViewById(R.id.Ab);
