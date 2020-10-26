@@ -98,7 +98,7 @@ public class GestioneDB {
     }
 
 
-    public boolean aggiornaPreferito(long rigaId, String name, String email) {
+    public boolean aggiornaPreferito (long rigaId, String name, String email) {
         ContentValues args = new ContentValues();
         args.put(KEY_NOME, name);
         args.put(KEY_INDIRIZZO, email);

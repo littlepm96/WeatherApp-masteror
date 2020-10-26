@@ -71,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
             return null;
         }
         return json;
+
     }
 
 
@@ -121,13 +122,14 @@ public class MainActivity extends AppCompatActivity {
                 //CHIAMATA ALLA TERZA VIEW
 
     public void next(View view) {
-        String s = "3";
+        String s = "meteo di 5 giorni";
         Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(this, Activity3.class);
 
         EditText editText = (EditText) findViewById(R.id.Ab);
         String message = editText.getText().toString();
         intent.putExtra(EXTRA_MESSAGE, message);
+        hideKeyboard(this);
         startActivity(intent);
     }
 

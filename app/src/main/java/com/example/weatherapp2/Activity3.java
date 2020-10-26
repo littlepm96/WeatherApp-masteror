@@ -124,10 +124,12 @@ public class Activity3 extends AppCompatActivity {
 
                 /////////////////////////////////////////////////////////
                 double t = Double.valueOf(temperature) - 273.15;
-                t =Double.parseDouble(new DecimalFormat("##.##").format(t));
+                String s=Double.toString(Double.parseDouble(new DecimalFormat("##.##").format(t)));
+                //t =Double.parseDouble(new DecimalFormat("##.##").format(t));
+                //String s=Double.toString(t);
+                s=s+" C*";
 
-
-                meteo j =new meteo(data,description,String.valueOf(t));
+                meteo j =new meteo(data,description,s);
 
                 city.add(j);
 
