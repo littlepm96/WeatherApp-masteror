@@ -1,6 +1,7 @@
 package com.example.weatherapp2;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -41,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
     AutoCompleteTextView cityName;
     Button searchButton, aggiungiButton;
     TextView result;
+    Context context = this;
 
 
     //Method for writing data to text file
@@ -135,8 +137,6 @@ public class MainActivity extends AppCompatActivity {
     public void addPreferiti(View view) {
 
 
-        String s = "Aggiunto ai preferiti!";
-        Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
         //Intent intent = new Intent(this, Activity3.class);
 
         EditText editText = (EditText) findViewById(R.id.Ab);
@@ -145,24 +145,23 @@ public class MainActivity extends AppCompatActivity {
         // startActivity(intent);
 
         aggiungiButton = findViewById(R.id.StarButton);
-        aggiungiButton.setOnClickListener(new View.OnClickListener() {
-            GestioneDB db;
 
-            {
-                db = new GestioneDB(getApplicationContext());
-            }
 
-            @Override
-            public void onClick(View view) {
+            GestioneDB db = new GestioneDB(context);
+
                 db.open();
-                long id = db.inserisciPreferito("ferro vecchio", "Via truzzo");
-                db.close();
+                String city = cityName.getText().toString();
+                if (!(city.equals(""))){
+                    Log.d("gesù", "onClick: else ");
+                    long id = db.inserisciPreferito(cityName.getText().toString());
+                    String s = "Aggiunto ai preferiti!";
+                    Toast.makeText(context, s, Toast.LENGTH_SHORT).show();
+                    db.close();
+                }
             }
-        });
-    }
 
 
-    class Weather extends AsyncTask<String,Void,String>{  //First String means URL is in String, Void mean nothing, Third String means Return type will be String
+    class Weather extends AsyncTask<String,Void,String> {  //First String means URL is in String, Void mean nothing, Third String means Return type will be String
 
         @Override
         protected String doInBackground(String... address) {

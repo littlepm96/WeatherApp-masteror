@@ -90,11 +90,11 @@ public class Activity2 extends AppCompatActivity {
         GestioneDB db = new GestioneDB(this);
 
                         //Apertura DB ed aggiunta
-
+/*
         db.open();
-        long id = db.inserisciPreferito("ferro vecchio", "Via truzzo");
+        long id = db.inserisciPreferito("ferro vecchio");
         db.close();
-
+*/
                             //Eliminare dal DB
                             //SE NECESSARIO
 /*
@@ -113,10 +113,12 @@ public class Activity2 extends AppCompatActivity {
         if (c.moveToFirst()) {
             do {
                 city.add(c.getString(1));
-                Toast.makeText(this, "id: " + c.getString(0) + "\n" +
+                /*Toast.makeText(this, "id: " + c.getString(0) + "\n" +
                                 "Nome: " + c.getString(1) + "\n" +
-                                "Indirizzo: " + c.getString(2),
+                               "Indirizzo: " + c.getString(2),
                         Toast.LENGTH_LONG).show();
+
+                 */
             } while (c.moveToNext());
         }
         db.close();

@@ -70,13 +70,21 @@ public class GestioneDB {
         DBHelper.close();
     }
 
-
+/*
     public long inserisciPreferito(String nome, String indirizzo) {
         ContentValues initialValues = new ContentValues();
         initialValues.put(KEY_NOME, nome);
         initialValues.put(KEY_INDIRIZZO, indirizzo);
         return db.insert(DATABASE_TABELLA, null, initialValues);
     }
+*/
+
+    public long inserisciPreferito(String nome) {
+        ContentValues initialValues = new ContentValues();
+        initialValues.put(KEY_NOME, nome);
+        return db.insert(DATABASE_TABELLA, null, initialValues);
+    }
+
 
 
     public boolean cancellaPreferito(long rigaId) {
