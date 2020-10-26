@@ -149,7 +149,7 @@ public class MainActivity extends AppCompatActivity {
             GestioneDB db;
 
             {
-                db = new GestioneDB(this);
+                db = new GestioneDB(getApplicationContext());
             }
 
             @Override

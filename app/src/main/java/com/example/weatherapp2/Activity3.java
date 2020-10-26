@@ -79,7 +79,7 @@ public class Activity3 extends AppCompatActivity {
 
         Intent intent = getIntent();
         String message = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
-        TextView vi=findViewById(R.id.city);
+        TextView vi = findViewById(R.id.city);
         vi.setText(message);
 
         //View cityName = findViewById(R.id.Ab);
