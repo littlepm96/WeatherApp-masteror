@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.Toast;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -136,5 +137,13 @@ public class Activity2 extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(new adapter(city));
     };
+
+    public void delpreferiti(View view) {
+
+GestioneDB db =new GestioneDB(getApplicationContext());
+db.open();
+      // Cursor cursor=db.ottieniPreferito();
+db.close();
+    }
 
 }

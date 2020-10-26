@@ -124,6 +124,7 @@ public class MainActivity extends AppCompatActivity {
                 //CHIAMATA ALLA TERZA VIEW
 
     public void next(View view) {
+
         String s = "meteo di 5 giorni";
         Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(this, Activity3.class);
@@ -131,8 +132,8 @@ public class MainActivity extends AppCompatActivity {
         EditText editText = (EditText) findViewById(R.id.Ab);
         String message = editText.getText().toString();
         intent.putExtra(EXTRA_MESSAGE, message);
-        hideKeyboard(this);
-        startActivity(intent);
+
+        startActivity(intent);hideKeyboard(this);
     }
 
     //Funzione che aggiunge città nell'elenco dei preferiti
@@ -146,16 +147,16 @@ public class MainActivity extends AppCompatActivity {
         // intent.putExtra(EXTRA_MESSAGE, message);
         // startActivity(intent);
 
-        aggiungiButton = findViewById(R.id.StarButton);
+
 
 
             GestioneDB db = new GestioneDB(context);
 
                 db.open();
-                String city = cityName.getText().toString();
+                String city = message;
                 if (!(city.equals(""))){
                     Log.d("gesù", "onClick: else ");
-                    long id = db.inserisciPreferito(cityName.getText().toString());
+                    long id = db.inserisciPreferito(message);
                     String s = "Aggiunto ai preferiti!";
                     Toast.makeText(context, s, Toast.LENGTH_SHORT).show();
                     db.close();
