@@ -86,7 +86,6 @@ public class GestioneDB {
     }
 
 
-
     public boolean cancellaPreferito(String nome) {
         return db.delete(DATABASE_TABELLA, KEY_RIGAID + "=" + nome, null) > 0;
     }
@@ -111,8 +110,9 @@ public class GestioneDB {
         }
         return mCursore;
     }
-
-
+    public boolean cancellaPreferito(long rigaId) {
+        return db.delete(DATABASE_TABELLA, KEY_RIGAID + "=" + rigaId, null) > 0;
+    }
 
     public boolean aggiornaPreferito (long rigaId, String name) {
         ContentValues args = new ContentValues();
