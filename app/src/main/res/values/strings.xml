@@ -16,4 +16,6 @@
     <string name="data_ora">data/ora</string>
     <string name="DEL">Button</string>
     <string name="del">DEL</string>
+
+    <string name="delete">Button</string>
 </resources>
