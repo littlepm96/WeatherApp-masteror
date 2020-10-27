@@ -1,10 +1,18 @@
 package com.example.weatherapp2;
 
+import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -19,9 +27,12 @@ import java.util.Collections;
 import java.util.Comparator;
 
 public class Activity2 extends AppCompatActivity {
+    private static final String EXTRA_MESSAGE ="com.example.weatherapp2" ;
+
+
     public  String  loadFromRaw(){
 
-        InputStream is = getResources().openRawResource(R.raw.city);
+        InputStream is = getResources().openRawResource(R.raw.ez);
 
         Writer writer = new StringWriter();
         char[] buffer = new char[1024];
@@ -85,26 +96,9 @@ public class Activity2 extends AppCompatActivity {
         }
 */
 
-        //INIZIO DATABASE
+                      // Creazione DATABASE
 
         GestioneDB db = new GestioneDB(this);
-
-                        //Apertura DB ed aggiunta
-/*
-        db.open();
-        long id = db.inserisciPreferito("ferro vecchio");
-        db.close();
-*/
-                            //Eliminare dal DB
-                            //SE NECESSARIO
-/*
-        db.open();
-        boolean x = db.cancellaPreferito(0);
-        boolean y = db.cancellaPreferito(1);
-        boolean z = db.cancellaPreferito(2);
-        db.close();
-
- */
 
                 //Apertura DB e visualizzazione del contenuto
 
@@ -113,15 +107,11 @@ public class Activity2 extends AppCompatActivity {
         if (c.moveToFirst()) {
             do {
                 city.add(c.getString(1));
-                /*Toast.makeText(this, "id: " + c.getString(0) + "\n" +
-                                "Nome: " + c.getString(1) + "\n" +
-                               "Indirizzo: " + c.getString(2),
-                        Toast.LENGTH_LONG).show();
-
-                 */
             } while (c.moveToNext());
         }
-        db.close();
+
+
+
 
         Collections.sort(city, new Comparator<String>() {
             @Override
@@ -137,4 +127,45 @@ public class Activity2 extends AppCompatActivity {
         recyclerView.setAdapter(new adapter(city));
     };
 
+                //ELIMINA PREFERITO
+
+    public void delpreferiti(View view) {
+
+    GestioneDB db=new GestioneDB(this);
+    db.open();
+       ////////////////////////////////////////////////////////qua
+        db.close();
+    finish();
+      /*
+
+
+        String message = Text.getText().toString();
+        String city = message;
+        GestioneDB db= new GestioneDB(getApplicationContext());
+        boolean id;
+        if (!(city.equals(""))){id= db.cancellaPreferito(city);}
+
+*/
+
+    }
+
+    public void setpreferiti(View view) {
+        Intent intent = new Intent(this, MainActivity.class);
+        TextView Text = (TextView) view;
+        String message = Text.getText().toString();
+        Intent data = new Intent();
+        data.putExtra("key",message);
+
+        setResult(RESULT_OK,data);
+        finish();
+
+
+
+
+       // intent.putExtra(EXTRA_MESSAGE, message);
+
+
+
+    }
 }
+

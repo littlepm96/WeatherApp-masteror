@@ -40,16 +40,20 @@ public class MainActivity extends AppCompatActivity {
     public static String EXTRA_MESSAGE="com.example.weatherapp2";
 
     AutoCompleteTextView cityName;
-    Button searchButton, aggiungiButton;
+    Button searchButton;
     TextView result;
     Context context = this;
+    int requestcode=3;
 
 
-    //Method for writing data to text file
+                //Method for writing data to text file
+
     private void saveMessageIntoSDCard(File savedFile, String messageBody) {
+
         try {
 
             //File writer is used for writing data
+
             FileWriter fWriter = new FileWriter(savedFile);
             fWriter.write(messageBody);//write data
             fWriter.flush();//flush writer
@@ -73,14 +77,15 @@ public class MainActivity extends AppCompatActivity {
             return null;
         }
         return json;
+
     }
 
 
     public ArrayList<String> arrayListLoad(ArrayList z){
 
         try {
-            JSONArray array = new JSONArray(loadJSONFromAsset());
 
+            JSONArray array = new JSONArray(loadJSONFromAsset());
             for (int i=0;i< array.length();i++){
                 JSONObject cit = array.getJSONObject(i);
                 if(!(cit.get("country").toString().equals("IT"))) {}
@@ -94,6 +99,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
                 //MENÙ CONTESTUALE IN ALTO A DESTRA
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
@@ -113,47 +119,49 @@ public class MainActivity extends AppCompatActivity {
                 //  String s = "ferraccio";
                 //  Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(this, Activity2.class);
-                startActivity(intent);
+
+                startActivityForResult(intent,requestcode);
                 break;
 
         }
         return super.onOptionsItemSelected(item);
     }
-
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 3) {
+            if (resultCode == RESULT_OK) {
+                String str = data.getStringExtra("key");
+             EditText editText = (EditText) findViewById(R.id.Ab);
+             editText.setText(str);
+            }
+        }
+    }
                 //CHIAMATA ALLA TERZA VIEW
 
     public void next(View view) {
-        String s = "3";
+
+        String s = "meteo di 5 giorni";
         Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(this, Activity3.class);
 
         EditText editText = (EditText) findViewById(R.id.Ab);
         String message = editText.getText().toString();
         intent.putExtra(EXTRA_MESSAGE, message);
+
         startActivity(intent);
+        hideKeyboard(this);
     }
 
-    //Funzione che aggiunge città nell'elenco dei preferiti
+                //AGGIUNGI A PREFERITI
+
     public void addPreferiti(View view) {
-
-
-        //Intent intent = new Intent(this, Activity3.class);
-
         EditText editText = (EditText) findViewById(R.id.Ab);
         String message = editText.getText().toString();
-        // intent.putExtra(EXTRA_MESSAGE, message);
-        // startActivity(intent);
-
-        aggiungiButton = findViewById(R.id.StarButton);
-
 
             GestioneDB db = new GestioneDB(context);
-
                 db.open();
-                String city = cityName.getText().toString();
+                String city = message;
                 if (!(city.equals(""))){
-                    Log.d("gesù", "onClick: else ");
-                    long id = db.inserisciPreferito(cityName.getText().toString());
+                    long id = db.inserisciPreferito(message);
                     String s = "Aggiunto ai preferiti!";
                     Toast.makeText(context, s, Toast.LENGTH_SHORT).show();
                     db.close();
@@ -210,61 +218,9 @@ public class MainActivity extends AppCompatActivity {
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
-/*
 
-String MY_FILE_NAME = “mytextfile.txt”;
-// Create a new output file stream
-FileOutputStream fileos = openFileOutput(MY_FILE_NAME, Context.MODE_PRIVATE);
-// Create a new file input stream.
-FileInputStream fileis = openFileInput(My_FILE_NAME);
------------------------------------------------------------------------------
-public void Read(){
-static final int READ_BLOCK_SIZE = 100;
-try {
-            FileInputStream fileIn=openFileInput("mytextfile.txt");
-            InputStreamReader InputRead= new InputStreamReader(fileIn);
 
-            char[] inputBuffer= new char[READ_BLOCK_SIZE];
-            String s="";
-            int charRead;
-
-            while ((charRead=InputRead.read(inputBuffer))>0) {
-                // char to string conversion
-                String readstring=String.copyValueOf(inputBuffer,0,charRead);
-                s +=readstring;
-            }
-            InputRead.close();
-            Toast.makeText(getBaseContext(), s,Toast.LENGTH_SHORT).show();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-}
----------------------------------------------------------------------
-public void Write(){
-try {
-        FileOutputStream fileout=openFileOutput("mytextfile.txt", MODE_PRIVATE);
-        OutputStreamWriter outputWriter=new OutputStreamWriter(fileout);
-        outputWriter.write("TEST STRING..");
-        outputWriter.close();
-
-        //display file saved message
-        Toast.makeText(getBaseContext(), "File saved successfully!",
-        Toast.LENGTH_SHORT).show();
-
-    } catch (Exception e) {
-        e.printStackTrace();
-    }
-
-}
-
-also if you are not in Activity ...you have to write getApplicationContext() before openFile
----------------------------------------------------------------------------------------
-
-    Log.i("weatherData",weatherData);
-    weather data is in Array
-
- */
+                            //METODO PER LA RICERCA
 
     public void search(View view){
         cityName = findViewById(R.id.Ab);
@@ -336,6 +292,11 @@ also if you are not in Activity ...you have to write getApplicationContext() bef
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Intent intent = getIntent();
+        String message = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
+        EditText editText = (EditText) findViewById(R.id.Ab);
+        editText.setText(message);
 
         ArrayList<String> c=new ArrayList<>();
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,

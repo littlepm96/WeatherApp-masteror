@@ -11,4 +11,11 @@
     <string name="b">Button</string>
     <string name="search">search</string>
     <string name="aggiungi_ai_preferiti">Aggiungi ai preferiti</string>
+    <string name="sgdgd">sgdgd</string>
+    <string name="meteo">meteo</string>
+    <string name="data_ora">data/ora</string>
+    <string name="DEL">Button</string>
+    <string name="del">DEL</string>
+
+    <string name="delete">Button</string>
 </resources>
