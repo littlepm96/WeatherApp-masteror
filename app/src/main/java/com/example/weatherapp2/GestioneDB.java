@@ -87,7 +87,7 @@ public class GestioneDB {
 
 
     public boolean cancellaPreferito(String nome) {
-        return db.delete(DATABASE_TABELLA, KEY_RIGAID + "=" + nome, null) > 0;
+        return db.delete(DATABASE_TABELLA, KEY_NOME + "=\"" + nome+"\"",null) > 0;
     }
 
 

@@ -43,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
     Button searchButton;
     TextView result;
     Context context = this;
+    int requestcode=3;
 
 
                 //Method for writing data to text file
@@ -118,13 +119,22 @@ public class MainActivity extends AppCompatActivity {
                 //  String s = "ferraccio";
                 //  Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(this, Activity2.class);
-                startActivity(intent);
+
+                startActivityForResult(intent,requestcode);
                 break;
 
         }
         return super.onOptionsItemSelected(item);
     }
-
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 3) {
+            if (resultCode == RESULT_OK) {
+                String str = data.getStringExtra("key");
+             EditText editText = (EditText) findViewById(R.id.Ab);
+             editText.setText(str);
+            }
+        }
+    }
                 //CHIAMATA ALLA TERZA VIEW
 
     public void next(View view) {
