@@ -234,7 +234,7 @@ public class MainActivity extends AppCompatActivity {
         String content;
         Weather weather = new Weather();
         try {
-            content = weather.execute("http://api.openweathermap.org/data/2.5/weather?q=" +
+            content = weather.execute("https://api.openweathermap.org/data/2.5/weather?q=" +
                     cName+"&APPID=fc87ff947ff79d8e26cc89dc744d00bc").get();
             //First we will check data is retrieve successfully or not
             Log.d("contentData",content);
