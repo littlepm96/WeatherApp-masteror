@@ -208,61 +208,7 @@ public class MainActivity extends AppCompatActivity {
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
-/*
 
-String MY_FILE_NAME = “mytextfile.txt”;
-// Create a new output file stream
-FileOutputStream fileos = openFileOutput(MY_FILE_NAME, Context.MODE_PRIVATE);
-// Create a new file input stream.
-FileInputStream fileis = openFileInput(My_FILE_NAME);
------------------------------------------------------------------------------
-public void Read(){
-static final int READ_BLOCK_SIZE = 100;
-try {
-            FileInputStream fileIn=openFileInput("mytextfile.txt");
-            InputStreamReader InputRead= new InputStreamReader(fileIn);
-
-            char[] inputBuffer= new char[READ_BLOCK_SIZE];
-            String s="";
-            int charRead;
-
-            while ((charRead=InputRead.read(inputBuffer))>0) {
-                // char to string conversion
-                String readstring=String.copyValueOf(inputBuffer,0,charRead);
-                s +=readstring;
-            }
-            InputRead.close();
-            Toast.makeText(getBaseContext(), s,Toast.LENGTH_SHORT).show();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-}
----------------------------------------------------------------------
-public void Write(){
-try {
-        FileOutputStream fileout=openFileOutput("mytextfile.txt", MODE_PRIVATE);
-        OutputStreamWriter outputWriter=new OutputStreamWriter(fileout);
-        outputWriter.write("TEST STRING..");
-        outputWriter.close();
-
-        //display file saved message
-        Toast.makeText(getBaseContext(), "File saved successfully!",
-        Toast.LENGTH_SHORT).show();
-
-    } catch (Exception e) {
-        e.printStackTrace();
-    }
-
-}
-
-also if you are not in Activity ...you have to write getApplicationContext() before openFile
----------------------------------------------------------------------------------------
-
-    Log.i("weatherData",weatherData);
-    weather data is in Array
-
- */
 
                             //METODO PER LA RICERCA
 
@@ -336,6 +282,11 @@ also if you are not in Activity ...you have to write getApplicationContext() bef
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Intent intent = getIntent();
+        String message = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
+        EditText editText = (EditText) findViewById(R.id.Ab);
+        editText.setText(message);
 
         ArrayList<String> c=new ArrayList<>();
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,

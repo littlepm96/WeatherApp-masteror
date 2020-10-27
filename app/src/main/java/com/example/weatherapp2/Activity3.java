@@ -127,7 +127,7 @@ public class Activity3 extends AppCompatActivity {
                 String s=Double.toString(Double.parseDouble(new DecimalFormat("##.##").format(t)));
                 //t =Double.parseDouble(new DecimalFormat("##.##").format(t));
                 //String s=Double.toString(t);
-                s=s+" C*";
+                s=s+" C°";
 
                 meteo j =new meteo(data,description,s);
 

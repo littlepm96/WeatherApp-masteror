@@ -15,4 +15,5 @@
     <string name="meteo">meteo</string>
     <string name="data_ora">data/ora</string>
     <string name="DEL">Button</string>
+    <string name="del">DEL</string>
 </resources>
