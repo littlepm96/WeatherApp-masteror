@@ -133,12 +133,7 @@ public class Activity2 extends AppCompatActivity {
 
     GestioneDB db=new GestioneDB(this);
     db.open();
-        RecyclerView recyclerView =findViewById(R.id.view);
-        View ew = recyclerView.getLayoutManager().findContainingItemView(recyclerView) ;
-        TextView t =ew.findViewById(R.id.title);
-
-
-        db.cancellaPreferito(t.getText().toString());
+       ////////////////////////////////////////////////////////qua
         db.close();
     finish();
       /*
