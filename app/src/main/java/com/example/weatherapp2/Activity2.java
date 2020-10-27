@@ -11,6 +11,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 import java.io.BufferedReader;
@@ -26,9 +27,11 @@ import java.util.Collections;
 import java.util.Comparator;
 
 public class Activity2 extends AppCompatActivity {
+    private static final String EXTRA_MESSAGE ="com.example.weatherapp2" ;
+
     public  String  loadFromRaw(){
 
-        InputStream is = getResources().openRawResource(R.raw.city);
+        InputStream is = getResources().openRawResource(R.raw.ez);
 
         Writer writer = new StringWriter();
         char[] buffer = new char[1024];
@@ -129,7 +132,21 @@ public class Activity2 extends AppCompatActivity {
         TextView textView = (TextView) findViewById(R.id.title);
         String message = textView.getText().toString();
         String city = message;
+        GestioneDB db= new GestioneDB(getApplicationContext());
 
+        if (!(city.equals(""))){db.cancellaPreferito(city);}
+
+
+
+    }
+
+    public void setpreferiti(View view) {
+        Intent intent = new Intent(this, MainActivity.class);
+        TextView Text =  findViewById(R.id.title);
+        String message = Text.getText().toString();
+        intent.putExtra(EXTRA_MESSAGE, message);
+
+        startActivity(intent);
 
     }
 }

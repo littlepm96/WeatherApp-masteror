@@ -10,9 +10,12 @@
     <TextView
 
         android:id="@+id/title"
-        android:layout_width="201dp"
-        android:layout_height="46dp"
-        android:padding="8dp"
+        android:layout_width="193dp"
+        android:layout_height="57dp"
+
+        android:layout_weight="0.5"
+        android:gravity="center"
+        android:onClick="setpreferiti"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.188"
@@ -27,13 +30,19 @@
         android:layout_width="97dp"
         android:layout_height="36dp"
         android:onClick="delpreferiti"
-        android:text="DEL"
+        android:text="@string/del"
+
+        android:layout_weight="0.5"
+        android:gravity="center"
+
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/title"
-        app:layout_constraintTop_toTopOf="parent"
 
-        />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.497" />
 
 
 </android.support.constraint.ConstraintLayout>
