@@ -29,6 +29,7 @@ import java.util.Comparator;
 public class Activity2 extends AppCompatActivity {
     private static final String EXTRA_MESSAGE ="com.example.weatherapp2" ;
 
+
     public  String  loadFromRaw(){
 
         InputStream is = getResources().openRawResource(R.raw.ez);
@@ -108,7 +109,9 @@ public class Activity2 extends AppCompatActivity {
                 city.add(c.getString(1));
             } while (c.moveToNext());
         }
-        db.close();
+
+
+
 
         Collections.sort(city, new Comparator<String>() {
             @Override
@@ -128,25 +131,45 @@ public class Activity2 extends AppCompatActivity {
 
     public void delpreferiti(View view) {
 
+    GestioneDB db=new GestioneDB(this);
+    db.open();
+        RecyclerView recyclerView =findViewById(R.id.view);
+        View ew = recyclerView.getLayoutManager().findContainingItemView(recyclerView) ;
+        TextView t =ew.findViewById(R.id.title);
 
-        TextView textView = (TextView) findViewById(R.id.title);
-        String message = textView.getText().toString();
+
+        db.cancellaPreferito(t.getText().toString());
+        db.close();
+    finish();
+      /*
+
+
+        String message = Text.getText().toString();
         String city = message;
         GestioneDB db= new GestioneDB(getApplicationContext());
+        boolean id;
+        if (!(city.equals(""))){id= db.cancellaPreferito(city);}
 
-        if (!(city.equals(""))){db.cancellaPreferito(city);}
-
-
+*/
 
     }
 
     public void setpreferiti(View view) {
         Intent intent = new Intent(this, MainActivity.class);
-        TextView Text =  findViewById(R.id.title);
+        TextView Text = (TextView) view;
         String message = Text.getText().toString();
-        intent.putExtra(EXTRA_MESSAGE, message);
+        Intent data = new Intent();
+        data.putExtra("key",message);
 
-        startActivity(intent);
+        setResult(RESULT_OK,data);
+        finish();
+
+
+
+
+       // intent.putExtra(EXTRA_MESSAGE, message);
+
+
 
     }
 }
