@@ -32,6 +32,17 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.DecimalFormat;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnSuccessListener;
 
 import java.util.ArrayList;
 
@@ -43,8 +54,8 @@ public class MainActivity extends AppCompatActivity {
     Button searchButton;
     TextView result;
     Context context = this;
-    int requestcode=3;
-
+    int requestcode = 3;
+    private FusedLocationProviderClient fusedLocationClient;
 
                 //Method for writing data to text file
 
@@ -287,6 +298,16 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+                                    //MAPS
+
+    protected void createLocationRequest() {
+        LocationRequest locationRequest = LocationRequest.create();
+        locationRequest.setInterval(10000);
+        locationRequest.setFastestInterval(5000);
+        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+    }
+
+                    //METODO ON_CREATE
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -305,5 +326,13 @@ public class MainActivity extends AppCompatActivity {
         AutoCompleteTextView auto = (AutoCompleteTextView) findViewById(R.id.Ab);
         auto.setAdapter(adapter);
 
+
+
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+
+
+
     }
+
+
 }
