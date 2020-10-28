@@ -83,6 +83,9 @@ public class Activity3 extends AppCompatActivity {
             content = weather.execute("http://api.openweathermap.org/data/2.5/forecast?q=" +
                     cName+"&APPID=fc87ff947ff79d8e26cc89dc744d00bc&lang=it").get();
             //First we will check data is retrieve successfully or not
+
+            //http://api.openweathermap.org/data/2.5/forecast?lat=35&lon=139&appid=fc87ff947ff79d8e26cc89dc744d00bc
+
             Log.d("contentData",content);
 
             //JSON
