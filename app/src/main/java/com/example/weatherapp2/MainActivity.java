@@ -55,7 +55,6 @@ public class MainActivity extends AppCompatActivity {
     TextView result;
     Context context = this;
     int requestcode = 3;
-    private FusedLocationProviderClient fusedLocationClient;
 
                 //Method for writing data to text file
 
@@ -328,7 +327,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+        //fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
 
 
