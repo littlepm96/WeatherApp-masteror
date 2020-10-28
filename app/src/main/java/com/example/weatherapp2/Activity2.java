@@ -22,6 +22,7 @@ import java.util.Collections;
 import java.util.Comparator;
 
 public class Activity2 extends AppCompatActivity {
+
     private static final String EXTRA_MESSAGE ="com.example.weatherapp2" ;
 
 
@@ -128,7 +129,7 @@ public class Activity2 extends AppCompatActivity {
 
     GestioneDB db=new GestioneDB(this);
     db.open();
-       ////////////////////////////////////////////////////////qua
+        ////////////////////////////////////////////////////////qua
         db.close();
     finish();
       /*
@@ -162,5 +163,8 @@ public class Activity2 extends AppCompatActivity {
 
 
     }
+
+    
+
 }
 

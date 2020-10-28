@@ -50,6 +50,7 @@ public class adapter extends RecyclerView.Adapter<adapter.ViewHolder>{
             super(itemView);
 
         titolo= itemView.findViewById(R.id.title);
+
        ///////////////////
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -62,6 +63,10 @@ public class adapter extends RecyclerView.Adapter<adapter.ViewHolder>{
 
     }
 
+        }
+
+        public interface OnBtnClickListner{
+        void onDeleteBtnClick(int position);
         }
 
 }
