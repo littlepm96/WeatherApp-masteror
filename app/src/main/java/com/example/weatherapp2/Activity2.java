@@ -126,11 +126,13 @@ public class Activity2 extends AppCompatActivity {
 
     public void delpreferiti(View view) {
 
-    GestioneDB db=new GestioneDB(this);
-    db.open();
-       ////////////////////////////////////////////////////////qua
+        GestioneDB db = new GestioneDB(this);
+        db.open();
+        db.drop();
         db.close();
-    finish();
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+    }
       /*
 
 
@@ -142,7 +144,7 @@ public class Activity2 extends AppCompatActivity {
 
 */
 
-    }
+
 
     public void setpreferiti(View view) {
         Intent intent = new Intent(this, MainActivity.class);

@@ -59,6 +59,11 @@ public class GestioneDB {
 
     }
 
+public void drop (){
+    db.execSQL("DROP TABLE IF EXISTS clienti");
+
+   }
+
 
     public GestioneDB open() throws SQLException {
         db = DBHelper.getWritableDatabase();
