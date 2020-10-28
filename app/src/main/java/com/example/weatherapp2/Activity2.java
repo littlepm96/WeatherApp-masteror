@@ -129,6 +129,7 @@ public class Activity2 extends AppCompatActivity {
     GestioneDB db=new GestioneDB(this);
     db.open();
        ////////////////////////////////////////////////////////qua
+
         db.close();
     finish();
       /*
