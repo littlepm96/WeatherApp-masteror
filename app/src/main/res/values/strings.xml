@@ -19,4 +19,5 @@
 
     <string name="delete">Button</string>
     <string name="elimina">Elimina</string>
+    <string name="cancella_tutti">cancella tutti</string>
 </resources>

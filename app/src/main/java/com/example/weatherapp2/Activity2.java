@@ -78,19 +78,7 @@ public class Activity2 extends AppCompatActivity {
         setContentView(R.layout.activity_2);
         ArrayList<String> city=new ArrayList<>();
 
-      /*  try {
-            JSONArray array = new JSONArray(loadJSONFromAsset());
 
-            for (int i=0;i< array.length();i++){
-            JSONObject cit = array.getJSONObject(i);
-            if(!(cit.get("country").toString().equals("IT"))) {}
-            else city.add((String) cit.get("name")); }
-
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-*/
 
                       // Creazione DATABASE
 
@@ -126,11 +114,26 @@ public class Activity2 extends AppCompatActivity {
                 //ELIMINA PREFERITO
 
     public void delpreferiti(View view) {
-    GestioneDB db=new GestioneDB(this);
+        ArrayList<String> strings=new ArrayList<>();
+
+        GestioneDB db=new GestioneDB(this);
     db.open();
+
+
+        Cursor c = db.ottieniTuttiPreferiti();
+        if (c.moveToFirst()) {
+            do {
+                strings.add(c.getString(1));
+            } while (c.moveToNext());
+        }
+
+        for (String t:strings) {
+            db.cancellaPreferito(t);
+        }
+
+
         db.close();
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
+        finish();
     }
       /*
 
