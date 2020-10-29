@@ -22,6 +22,8 @@ public class GestioneDB {
             "CREATE TABLE clienti (id integer primary key autoincrement, "
                     + "nome text not null);";
 
+
+
     final Context context;
     DatabaseHelper DBHelper;
     SQLiteDatabase db;
@@ -43,8 +45,9 @@ public class GestioneDB {
         public void onCreate(SQLiteDatabase db) {
             try {
                 db.execSQL(DATABASE_CREAZIONE);
-                String s = "CREATE TABLE meteo (id integer primary key autoincrement, data text not null, meteo text not null,temperatura text not null)";
-                db.execSQL(s);
+                //String s = "CREATE TABLE meteo (id integer primary key autoincrement, data text not null, meteo text not null,temperatura text not null)";
+               // db.execSQL(s);
+
             }
             catch (SQLException e) {
                 e.printStackTrace();

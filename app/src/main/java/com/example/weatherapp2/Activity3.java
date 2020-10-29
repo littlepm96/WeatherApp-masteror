@@ -80,11 +80,23 @@ public class Activity3 extends AppCompatActivity {
         String content;
         Weather weather = new Weather();
         try {
+
+
+            new Thread(new Runnable() {
+
+                @Override
+                public void run() {
+ //
+                }
+            }).start();
+
+
+
             content = weather.execute("http://api.openweathermap.org/data/2.5/forecast?q=" +
                     cName+"&APPID=fc87ff947ff79d8e26cc89dc744d00bc&lang=it").get();
             //First we will check data is retrieve successfully or not
 
-            //http://api.openweathermap.org/data/2.5/forecast?lat=35&lon=139&appid=fc87ff947ff79d8e26cc89dc744d00bc
+           ///// //http://api.openweathermap.org/data/2.5/forecast?lat=35&lon=139&appid=fc87ff947ff79d8e26cc89dc744d00bc
 
             Log.d("contentData",content);
 
@@ -135,21 +147,30 @@ public class Activity3 extends AppCompatActivity {
 
             //Log.i("Temperature",temperature);
 
-            /*Log.i("main",main);
-            Log.i("description",description);*/
 
-            //double t = Double.valueOf(temperature) - 273.15;
-            //t =Double.parseDouble(new DecimalFormat("##.##").format(t));
+            /*
+                   new Thread(new Runnable() {
+
+                @Override
+                public void run() {
+ //
+                }
+            }).start();
 
 
-            /*String resultText = "Main :                     "+main+
-                    "\nDescription :        "+description +
-                    "\nTemperature :        "+t +"*C"+
-                    "\nVisibility :              "+visibilityInKilometer+" KM";
-            hideKeyboard(this);
-            //result.setText(resultText);*/
 
-            //Now we will show this result on screen
+            new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                SQLiteDatabase db = MyDatabase.getInstance(getApplicationContext()).getWritableDatabase();
+                                for(City city :cities){
+                                    CityTable.insert(db, city);
+                                }
+                            }
+                        }).start();
+            */
+
+
 
         } catch (Exception e) {
             e.printStackTrace();
