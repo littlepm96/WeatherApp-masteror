@@ -43,6 +43,8 @@ public class GestioneDB {
         public void onCreate(SQLiteDatabase db) {
             try {
                 db.execSQL(DATABASE_CREAZIONE);
+                String s = "CREATE TABLE meteo (id integer primary key autoincrement, data text not null, meteo text not null,temperatura text not null)";
+                db.execSQL(s);
             }
             catch (SQLException e) {
                 e.printStackTrace();
