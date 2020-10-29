@@ -22,6 +22,8 @@ public class GestioneDB {
             "CREATE TABLE clienti (id integer primary key autoincrement, "
                     + "nome text not null);";
 
+
+
     final Context context;
     DatabaseHelper DBHelper;
     SQLiteDatabase db;
@@ -43,6 +45,7 @@ public class GestioneDB {
         public void onCreate(SQLiteDatabase db) {
             try {
                 db.execSQL(DATABASE_CREAZIONE);
+
             }
             catch (SQLException e) {
                 e.printStackTrace();

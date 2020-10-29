@@ -1,14 +1,22 @@
 package com.example.weatherapp2;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Build;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.ActivityChooserView;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+
 import android.os.Bundle;
+import android.os.Looper;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,9 +28,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -32,8 +42,12 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.DecimalFormat;
+
 import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationAvailability;
+import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -47,16 +61,18 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
+    private static final int REQUEST_CODE_LOCATION_PEMISSION = 1;
 
-    public static String EXTRA_MESSAGE="com.example.weatherapp2";
 
+    public static String EXTRA_MESSAGE = "com.example.weatherapp2";
+    FusedLocationProviderClient fusedLocationClient;
     AutoCompleteTextView cityName;
     Button searchButton;
     TextView result;
     Context context = this;
     int requestcode = 3;
 
-                //Method for writing data to text file
+    //Method for writing data to text file
 
     private void saveMessageIntoSDCard(File savedFile, String messageBody) {
 
@@ -73,6 +89,7 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+
     public String loadJSONFromAsset() {
         String json = null;
         try {
@@ -91,15 +108,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public ArrayList<String> arrayListLoad(ArrayList z){
+    public ArrayList<String> arrayListLoad(ArrayList z) {
 
         try {
 
             JSONArray array = new JSONArray(loadJSONFromAsset());
-            for (int i=0;i< array.length();i++){
+            for (int i = 0; i < array.length(); i++) {
                 JSONObject cit = array.getJSONObject(i);
-                if(!(cit.get("country").toString().equals("IT"))) {}
-                else z.add((String) cit.get("name")); }
+                if (!(cit.get("country").toString().equals("IT"))) {
+                } else z.add((String) cit.get("name"));
+            }
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -108,14 +126,15 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-                //MENÙ CONTESTUALE IN ALTO A DESTRA
+    //MENÙ CONTESTUALE IN ALTO A DESTRA
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return super.onCreateOptionsMenu(menu);
     }
-                    //SCELTA DELLE AZIONI DEI PULSANTI INTERNO AL MENÙ
+
+    //SCELTA DELLE AZIONI DEI PULSANTI INTERNO AL MENÙ
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
@@ -130,22 +149,23 @@ public class MainActivity extends AppCompatActivity {
                 //  Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(this, Activity2.class);
 
-                startActivityForResult(intent,requestcode);
+                startActivityForResult(intent, requestcode);
                 break;
 
         }
         return super.onOptionsItemSelected(item);
     }
+
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == 3) {
             if (resultCode == RESULT_OK) {
                 String str = data.getStringExtra("key");
-             EditText editText = (EditText) findViewById(R.id.Ab);
-             editText.setText(str);
+                EditText editText = (EditText) findViewById(R.id.Ab);
+                editText.setText(str);
             }
         }
     }
-                //CHIAMATA ALLA TERZA VIEW
+    //CHIAMATA ALLA TERZA VIEW
 
     public void next(View view) {
 
@@ -161,25 +181,25 @@ public class MainActivity extends AppCompatActivity {
         hideKeyboard(this);
     }
 
-                //AGGIUNGI A PREFERITI
+    //AGGIUNGI A PREFERITI
 
     public void addPreferiti(View view) {
         EditText editText = (EditText) findViewById(R.id.Ab);
         String message = editText.getText().toString();
 
-            GestioneDB db = new GestioneDB(context);
-                db.open();
-                String city = message;
-                if (!(city.equals(""))){
-                    long id = db.inserisciPreferito(message);
-                    String s = "Aggiunto ai preferiti!";
-                    Toast.makeText(context, s, Toast.LENGTH_SHORT).show();
-                    db.close();
-                }
-            }
+        GestioneDB db = new GestioneDB(context);
+        db.open();
+        String city = message;
+        if (!(city.equals(""))) {
+            long id = db.inserisciPreferito(message);
+            String s = "Aggiunto ai preferiti!";
+            Toast.makeText(context, s, Toast.LENGTH_SHORT).show();
+            db.close();
+        }
+    }
 
 
-    class Weather extends AsyncTask<String,Void,String> {  //First String means URL is in String, Void mean nothing, Third String means Return type will be String
+    class Weather extends AsyncTask<String, Void, String> {  //First String means URL is in String, Void mean nothing, Third String means Return type will be String
 
         @Override
         protected String doInBackground(String... address) {
@@ -198,7 +218,7 @@ public class MainActivity extends AppCompatActivity {
                 int data = isr.read();
                 String content = "";
                 char ch;
-                while (data != -1){
+                while (data != -1) {
                     ch = (char) data;
                     content = content + ch;
                     data = isr.read();
@@ -215,7 +235,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-                    //NASCONDE LA TASTIERA
+    //NASCONDE LA TASTIERA
 
     public static void hideKeyboard(Activity activity) {
         InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
@@ -229,26 +249,25 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    //METODO PER LA RICERCA
 
-                            //METODO PER LA RICERCA
-
-    public void search(View view){
+    public void search(View view) {
         cityName = findViewById(R.id.Ab);
         searchButton = findViewById(R.id.searchButton);
         result = findViewById(R.id.resut);
 
         String cName = cityName.getText().toString();
 
-        Log.d("qua", "search:"+cName);
+        Log.d("qua", "search:" + cName);
 
         String content;
         Weather weather = new Weather();
         try {
             ///BHO
             content = weather.execute("https://api.openweathermap.org/data/2.5/weather?q=" +
-                    cName+"&APPID=fc87ff947ff79d8e26cc89dc744d00bc").get();
+                    cName + "&APPID=fc87ff947ff79d8e26cc89dc744d00bc").get();
             //First we will check data is retrieve successfully or not
-            Log.d("contentData",content);
+            Log.d("contentData", content);
 
             //JSON
             JSONObject jsonObject = new JSONObject(content);
@@ -262,7 +281,7 @@ public class MainActivity extends AppCompatActivity {
             String description = "";
             String temperature = "";
 
-            for(int i=0; i<array.length(); i++){
+            for (int i = 0; i < array.length(); i++) {
                 JSONObject weatherPart = array.getJSONObject(i);
                 main = weatherPart.getString("main");
                 description = weatherPart.getString("description");
@@ -273,21 +292,21 @@ public class MainActivity extends AppCompatActivity {
 
             visibility = Double.parseDouble(jsonObject.getString("visibility"));
             //By default visibility is in meter
-            int visibilityInKilometer = (int) visibility/1000;
+            int visibilityInKilometer = (int) visibility / 1000;
 
-            Log.i("Temperature",temperature);
+            Log.i("Temperature", temperature);
 
             /*Log.i("main",main);
             Log.i("description",description);*/
 
             double t = Double.valueOf(temperature) - 273.15;
-            t =Double.parseDouble(new DecimalFormat("##.##").format(t));
+            t = Double.parseDouble(new DecimalFormat("##.##").format(t));
 
 
-            String resultText = "Main :                     "+main+
-                    "\nDescription :        "+description +
-                    "\nTemperature :        "+t +"*C"+
-                    "\nVisibility :              "+visibilityInKilometer+" KM";
+            String resultText = "Main :                     " + main +
+                    "\nDescription :        " + description +
+                    "\nTemperature :        " + t + "*C" +
+                    "\nVisibility :              " + visibilityInKilometer + " KM";
             hideKeyboard(this);
             result.setText(resultText);
 
@@ -297,7 +316,7 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
-                                    //MAPS
+    //MAPS
 
     protected void createLocationRequest() {
         LocationRequest locationRequest = LocationRequest.create();
@@ -306,7 +325,8 @@ public class MainActivity extends AppCompatActivity {
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
     }
 
-                    //METODO ON_CREATE
+
+//METODO ON_CREATE
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -319,19 +339,89 @@ public class MainActivity extends AppCompatActivity {
         EditText editText = (EditText) findViewById(R.id.Ab);
         editText.setText(message);
 
-        ArrayList<String> c=new ArrayList<>();
+        ArrayList<String> c = new ArrayList<>();
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_dropdown_item_1line, arrayListLoad(c));
         AutoCompleteTextView auto = (AutoCompleteTextView) findViewById(R.id.Ab);
         auto.setAdapter(adapter);
 
 
-
-        //fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
-
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
 
     }
 
+    public void posizione(View view) {
+        if (ContextCompat.checkSelfPermission(
+                getApplicationContext(),
+                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(
+                    MainActivity.this, new String[]{
+                            Manifest.permission.ACCESS_FINE_LOCATION},
+                    REQUEST_CODE_LOCATION_PEMISSION
+            );
+        } else {
+            getCurrentLocation();
+        }
+
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == REQUEST_CODE_LOCATION_PEMISSION && grantResults.length > 0) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                getCurrentLocation();
+
+            } else {
+                Toast.makeText(this, "accesso gesu", Toast.LENGTH_SHORT).show();
+            }
+        }
+
+    }
+
+
+    private void getCurrentLocation() {
+        final TextView result = findViewById(R.id.resut);
+        final LocationRequest locationRequest = new LocationRequest();
+        locationRequest.setInterval(10000);
+        locationRequest.setFastestInterval(3000);
+        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        LocationServices.getFusedLocationProviderClient(MainActivity.this).requestLocationUpdates(locationRequest, new LocationCallback() {
+
+            @Override
+            public void onLocationResult(LocationResult locationResult) {
+                super.onLocationResult(locationResult);
+
+                LocationServices.getFusedLocationProviderClient(MainActivity.this).removeLocationUpdates(this);
+
+                if(locationResult!=null && locationResult.getLocations().size()>0){
+                    int latestLocationIndex=locationResult.getLocations().size()-1;
+                    double latitude=locationResult.getLocations().get(latestLocationIndex).getLatitude();
+                    double longitude=locationResult.getLocations().get(latestLocationIndex).getLongitude();
+
+                    result.setText(String.format("latitudine:%s\n longitudine:%s",
+                            latitude,longitude
+                    )
+                    );
+
+                }
+
+            }
+        }, Looper.getMainLooper());
+
+
+    }
 
 }
