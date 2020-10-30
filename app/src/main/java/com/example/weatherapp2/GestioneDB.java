@@ -8,6 +8,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import androidx.annotation.Nullable;
+
 public class GestioneDB {
 
     static final String KEY_RIGAID = "id";
@@ -17,6 +19,26 @@ public class GestioneDB {
     static final String DATABASE_NOME = "TestDB";
     static final String DATABASE_TABELLA = "clienti";
     static final int DATABASE_VERSIONE = 1;
+
+
+    public static final String TABLE = "meteo";
+
+    public static final String ID = "id";
+    public static final String DATA = "data";
+    public static final String METEO = "meteo";
+    public static final String TEMP = "temperature";
+
+
+     public static final String sql = "CREATE TABLE " + TABLE + " (" +
+            ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+            DATA + " TEXT, " +
+            METEO + " TEXT, " +
+            TEMP + " TEXT" +
+            ")";
+
+
+
+
 
     static final String DATABASE_CREAZIONE =
             "CREATE TABLE clienti (id integer primary key autoincrement, "
@@ -28,7 +50,13 @@ public class GestioneDB {
     DatabaseHelper DBHelper;
     SQLiteDatabase db;
 
-                            //CLASS
+ //   private static GestioneDB instance = null;
+
+   // public static GestioneDB getInstance(Context context) {
+     //   return instance == null ? instance = new GestioneDB(context) : instance;
+    //}
+
+ //classssss
 
     public GestioneDB(Context ctx) {
         this.context = ctx;
@@ -45,8 +73,12 @@ public class GestioneDB {
         public void onCreate(SQLiteDatabase db) {
             try {
                 db.execSQL(DATABASE_CREAZIONE);
+
                 //String s = "CREATE TABLE meteo (id integer primary key autoincrement, data text not null, meteo text not null,temperatura text not null)";
                // db.execSQL(s);
+
+
+             // db.execSQL(sql);
 
             }
             catch (SQLException e) {
@@ -59,6 +91,7 @@ public class GestioneDB {
             Log.w(DatabaseHelper.class.getName(),"Aggiornamento database dalla versione " + oldVersion + " alla "
                     + newVersion + ". I dati esistenti verranno eliminati.");
             db.execSQL("DROP TABLE IF EXISTS clienti");
+            db.execSQL("DROP TABLE IF EXISTS meteo");
             onCreate(db);
         }
 
@@ -66,7 +99,7 @@ public class GestioneDB {
 
 public void drop (){
     db.execSQL("DROP TABLE IF EXISTS clienti");
-
+    db.execSQL("DROP TABLE IF EXISTS meteo");
    }
 
 

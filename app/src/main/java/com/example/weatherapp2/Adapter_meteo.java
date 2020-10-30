@@ -10,11 +10,11 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 public class Adapter_meteo extends RecyclerView.Adapter<Adapter_meteo.ViewHolder> {
-    ArrayList<meteo> meteo;
+    ArrayList<Meteo> meteo;
     public Adapter_meteo() {
     }
 
-    public Adapter_meteo(ArrayList<meteo> meteos) {
+    public Adapter_meteo(ArrayList<Meteo> meteos) {
         this.meteo=meteos;
     }
 
