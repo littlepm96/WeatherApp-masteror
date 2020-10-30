@@ -37,9 +37,6 @@ public class GestioneDB {
             ")";
 
 
-
-
-
     static final String DATABASE_CREAZIONE =
             "CREATE TABLE clienti (id integer primary key autoincrement, "
                     + "nome text not null);";
@@ -49,14 +46,6 @@ public class GestioneDB {
     final Context context;
     DatabaseHelper DBHelper;
     SQLiteDatabase db;
-
- //   private static GestioneDB instance = null;
-
-   // public static GestioneDB getInstance(Context context) {
-     //   return instance == null ? instance = new GestioneDB(context) : instance;
-    //}
-
- //classssss
 
     public GestioneDB(Context ctx) {
         this.context = ctx;
@@ -73,12 +62,6 @@ public class GestioneDB {
         public void onCreate(SQLiteDatabase db) {
             try {
                 db.execSQL(DATABASE_CREAZIONE);
-
-                //String s = "CREATE TABLE meteo (id integer primary key autoincrement, data text not null, meteo text not null,temperatura text not null)";
-               // db.execSQL(s);
-
-
-             // db.execSQL(sql);
 
             }
             catch (SQLException e) {
@@ -113,14 +96,6 @@ public void drop (){
         DBHelper.close();
     }
 
-/*
-    public long inserisciPreferito(String nome, String indirizzo) {
-        ContentValues initialValues = new ContentValues();
-        initialValues.put(KEY_NOME, nome);
-        initialValues.put(KEY_INDIRIZZO, indirizzo);
-        return db.insert(DATABASE_TABELLA, null, initialValues);
-    }
-*/
 
     public long inserisciPreferito(String nome) {
         ContentValues initialValues = new ContentValues();
