@@ -43,6 +43,12 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.DecimalFormat;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationAvailability;
 import com.google.android.gms.location.LocationCallback;
@@ -258,10 +264,82 @@ public class MainActivity extends AppCompatActivity {
 
         String cName = cityName.getText().toString();
 
-        Log.d("qua", "search:" + cName);
 
-        String content;
-        Weather weather = new Weather();
+
+
+        String url ="https://api.openweathermap.org/data/2.5/weather?q=" +
+                cName + "&APPID=fc87ff947ff79d8e26cc89dc744d00bc&lang=it";
+        final StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        JSONObject jsonObject = null;
+                        try {
+                            jsonObject = new JSONObject(response);
+
+                        String weatherData = jsonObject.getString("weather");
+                        String mainTemperature = jsonObject.getString("main");
+                        double visibility;
+
+                        JSONArray array = new JSONArray(weatherData);
+
+                        String main = "";
+                        String description = "";
+                        String temperature = "";
+
+                        for (int i = 0; i < array.length(); i++) {
+                            JSONObject weatherPart = array.getJSONObject(i);
+                            main = weatherPart.getString("main");
+                            description = weatherPart.getString("description");
+                        }
+
+                        JSONObject mainPart = new JSONObject(mainTemperature);
+                        temperature = mainPart.getString("temp");
+
+                        visibility = Double.parseDouble(jsonObject.getString("visibility"));
+                        //By default visibility is in meter
+                        int visibilityInKilometer = (int) visibility / 1000;
+
+                        Log.i("Temperature", temperature);
+
+
+
+                        double t = Double.valueOf(temperature) - 273.15;
+                        t = Double.parseDouble(new DecimalFormat("##.##").format(t));
+
+
+                        String resultText = "Main :                     " + main +
+                                "\nDescription :        " + description +
+                                "\nTemperature :        " + t + "*C" +
+                                "\nVisibility :              " + visibilityInKilometer + " KM";
+                            result.setText(resultText);
+
+
+                        }
+                        catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                result.setText("That didn't work!");
+                //queue.cancelAll(this);
+            }
+        });
+        //queue.add(stringRequest);
+        MyVolley.getInstance(this).getQueue().add(stringRequest);
+        hideKeyboard(this);
+    }
+
+
+
+       /* Weather weather = new Weather();
+
+
+
         try {
             ///BHO
             content = weather.execute("https://api.openweathermap.org/data/2.5/weather?q=" +
@@ -296,8 +374,7 @@ public class MainActivity extends AppCompatActivity {
 
             Log.i("Temperature", temperature);
 
-            /*Log.i("main",main);
-            Log.i("description",description);*/
+
 
             double t = Double.valueOf(temperature) - 273.15;
             t = Double.parseDouble(new DecimalFormat("##.##").format(t));
@@ -315,15 +392,8 @@ public class MainActivity extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-    //MAPS
+    }*/
 
-    protected void createLocationRequest() {
-        LocationRequest locationRequest = LocationRequest.create();
-        locationRequest.setInterval(10000);
-        locationRequest.setFastestInterval(5000);
-        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-    }
 
 
 //METODO ON_CREATE
@@ -374,7 +444,7 @@ public class MainActivity extends AppCompatActivity {
                 getCurrentLocation();
 
             } else {
-                Toast.makeText(this, "accesso gesu", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "accesso", Toast.LENGTH_SHORT).show();
             }
         }
 

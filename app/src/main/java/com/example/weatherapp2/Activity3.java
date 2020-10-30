@@ -1,6 +1,7 @@
 package com.example.weatherapp2;
 
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,7 +10,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.widget.TextView;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -62,33 +69,22 @@ public class Activity3 extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_3);
-        ArrayList<meteo> city = new ArrayList<>();
+        ArrayList<Meteo> city = new ArrayList<>();
 
         Intent intent = getIntent();
         String message = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
         TextView vi = findViewById(R.id.city);
         vi.setText(message);
 
-        //View cityName = findViewById(R.id.Ab);
-        //View searchButton = findViewById(R.id.searchButton);
-        //View result = findViewById(R.id.resut);
+
 
         String cName = message.toString();
 
-        Log.d("qua", "search:"+cName);
+
 
         String content;
         Weather weather = new Weather();
         try {
-
-
-            new Thread(new Runnable() {
-
-                @Override
-                public void run() {
- //
-                }
-            }).start();
 
 
 
@@ -132,43 +128,12 @@ public class Activity3 extends AppCompatActivity {
                 //String s=Double.toString(t);
                 s=s+" C°";
 
-                meteo j =new meteo(data,description,s);
+                Meteo j =new Meteo(data,description,s);
 
                 city.add(j);
 
             }
 
-            //JSONObject mainPart = new JSONObject(mainTemperature);
-            //temperature = mainPart.getString("temp");
-
-            //visibility = Double.parseDouble(jsonObject.getString("visibility"));
-            //By default visibility is in meter
-            //int visibilityInKilometer = (int) visibility/1000;
-
-            //Log.i("Temperature",temperature);
-
-
-            /*
-                   new Thread(new Runnable() {
-
-                @Override
-                public void run() {
- //
-                }
-            }).start();
-
-
-
-            new Thread(new Runnable() {
-                            @Override
-                            public void run() {
-                                SQLiteDatabase db = MyDatabase.getInstance(getApplicationContext()).getWritableDatabase();
-                                for(City city :cities){
-                                    CityTable.insert(db, city);
-                                }
-                            }
-                        }).start();
-            */
 
 
 
@@ -178,6 +143,97 @@ public class Activity3 extends AppCompatActivity {
 
         RecyclerView recyclerView =findViewById(R.id.lista);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(new Adapter_meteo(city));
+        recyclerView.setAdapter(new Adapter_meteo(city));//try work
     };
-}
+    public ArrayList<Meteo> work(String cName){
+
+        String url ="http://api.openweathermap.org/data/2.5/forecast?q=" +
+                cName+"&APPID=fc87ff947ff79d8e26cc89dc744d00bc&lang=it";
+        final StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        final ArrayList<Meteo> meteos = new ArrayList<>();
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+
+                            JSONArray lista = jsonObject.getJSONArray("list");
+                            String weatherData = jsonObject.getString("weather");
+                            String mainTemperature = jsonObject.getString("main");
+                            String data = "";
+                            String description = "";
+                            String temperature = "";
+
+                            for(int i=0; i<lista.length(); i++){
+                                JSONObject weatherPart = lista.getJSONObject(i);
+                                data= weatherPart.getString("dt_txt");
+                                JSONArray bo = weatherPart.getJSONArray("weather");
+                                JSONObject maint = weatherPart.getJSONObject("main");
+
+
+                                temperature=maint.getString("temp");
+
+                                JSONObject desc=bo.getJSONObject(0);
+                                description=desc.getString("description");
+
+                                /////////////////////////////////////////////////////////
+
+                                double t = Double.valueOf(temperature) - 273.15;
+                                String s=Double.toString(Double.parseDouble(new DecimalFormat("##.##").format(t)));
+                                //t =Double.parseDouble(new DecimalFormat("##.##").format(t));
+                                //String s=Double.toString(t);
+                                s=s+" C°";
+
+                                Meteo j =new Meteo(data,description,s);
+
+                             meteos.add(j);
+
+                                new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                              GestioneDB db = new GestioneDB(getApplicationContext());
+
+                                //Apertura DB e visualizzazione del contenuto
+
+                                db.open();
+                                for(Meteo meteo :meteos){
+                                    meteoTable.insert(db.db, meteo);
+                                    db.close();
+                                }
+                            }
+                        }).start();
+
+
+
+                            }
+                        }
+                        catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                TextView vi=findViewById(R.id.city);
+                vi.setText("That didn't work!");
+                //queue.cancelAll(this);
+            }
+        });
+        //queue.add(stringRequest);
+        MyVolley.getInstance(this).getQueue().add(stringRequest);
+
+GestioneDB db=new GestioneDB(this);
+db.open();
+ArrayList<Meteo> arrayList;
+arrayList=meteoTable.selectAll(db.db);
+        return arrayList;
+    }
+
+
+    }
+
+
+
+
