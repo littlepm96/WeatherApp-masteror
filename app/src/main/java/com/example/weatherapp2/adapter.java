@@ -34,8 +34,6 @@ public class adapter extends RecyclerView.Adapter<adapter.ViewHolder>{
 
         viewHolder.titolo.setText((String)strings.get(i));
 
-
-
     }
 
     @Override
@@ -51,7 +49,6 @@ public class adapter extends RecyclerView.Adapter<adapter.ViewHolder>{
 
         titolo= itemView.findViewById(R.id.title);
 
-       ///////////////////
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -70,9 +67,3 @@ public class adapter extends RecyclerView.Adapter<adapter.ViewHolder>{
         }
 
 }
-
-
-
-
-
-

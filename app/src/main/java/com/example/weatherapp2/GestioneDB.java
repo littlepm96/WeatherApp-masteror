@@ -19,10 +19,7 @@ public class GestioneDB {
     static final String DATABASE_NOME = "TestDB";
     static final String DATABASE_TABELLA = "clienti";
     static final int DATABASE_VERSIONE = 1;
-
-
     public static final String TABLE = "meteo";
-
     public static final String ID = "id";
     public static final String DATA = "data";
     public static final String METEO = "meteo";
@@ -40,8 +37,6 @@ public class GestioneDB {
     static final String DATABASE_CREAZIONE =
             "CREATE TABLE clienti (id integer primary key autoincrement, "
                     + "nome text not null);";
-
-
 
     final Context context;
     DatabaseHelper DBHelper;

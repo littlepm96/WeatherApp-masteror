@@ -90,9 +90,8 @@ public class Activity3 extends AppCompatActivity {
 
             content = weather.execute("http://api.openweathermap.org/data/2.5/forecast?q=" +
                     cName+"&APPID=fc87ff947ff79d8e26cc89dc744d00bc&lang=it").get();
-            //First we will check data is retrieve successfully or not
 
-           ///// //http://api.openweathermap.org/data/2.5/forecast?lat=35&lon=139&appid=fc87ff947ff79d8e26cc89dc744d00bc
+            //First we will check data is retrieve successfully or not
 
             Log.d("contentData",content);
 
@@ -133,9 +132,6 @@ public class Activity3 extends AppCompatActivity {
                 city.add(j);
 
             }
-
-
-
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -203,14 +199,11 @@ public class Activity3 extends AppCompatActivity {
                             }
                         }).start();
 
-
-
                             }
                         }
                         catch (JSONException e) {
                             e.printStackTrace();
                         }
-
 
                     }
                 }, new Response.ErrorListener() {
@@ -230,9 +223,7 @@ ArrayList<Meteo> arrayList;
 arrayList=meteoTable.selectAll(db.db);
         return arrayList;
     }
-
-
-    }
+}
 
 
 

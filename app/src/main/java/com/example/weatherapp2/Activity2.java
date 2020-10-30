@@ -95,8 +95,6 @@ public class Activity2 extends AppCompatActivity {
         }
 
 
-
-
         Collections.sort(city, new Comparator<String>() {
             @Override
             public int compare(String o1, String o2) {
@@ -157,9 +155,6 @@ public class Activity2 extends AppCompatActivity {
 
         setResult(RESULT_OK,data);
         finish();
-
-
-
 
        // intent.putExtra(EXTRA_MESSAGE, message);
 

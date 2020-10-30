@@ -9,11 +9,11 @@ import java.util.ArrayList;
 /**
  * NonaLezione
  * Created by leonardo on 2019-11-29.
+ * PREGO
  */
 public class meteoTable {/////////////////////////meteoTableTest
 
     public static final String TABLE = "meteo";
-
     public static final String ID = "id";
     public static final String DATA = "data";
     public static final String METEO = "meteo";
