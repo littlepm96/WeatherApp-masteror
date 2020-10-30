@@ -80,21 +80,7 @@ public class MainActivity extends AppCompatActivity {
 
     //Method for writing data to text file
 
-    private void saveMessageIntoSDCard(File savedFile, String messageBody) {
 
-        try {
-
-            //File writer is used for writing data
-
-            FileWriter fWriter = new FileWriter(savedFile);
-            fWriter.write(messageBody);//write data
-            fWriter.flush();//flush writer
-            fWriter.close();//close writer
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 
     public String loadJSONFromAsset() {
         String json = null;
@@ -151,8 +137,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
 
             case R.id.preferiti:
-                //  String s = "ferraccio";
-                //  Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
+
                 Intent intent = new Intent(this, Activity2.class);
 
                 startActivityForResult(intent, requestcode);
@@ -204,42 +189,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
-    class Weather extends AsyncTask<String, Void, String> {  //First String means URL is in String, Void mean nothing, Third String means Return type will be String
-
-        @Override
-        protected String doInBackground(String... address) {
-            //String... means multiple address can be send. It acts as array
-            try {
-                URL url = new URL(address[0]);
-                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                //Establish connection with address
-                connection.connect();
-
-                //retrieve data from url
-                InputStream is = connection.getInputStream();
-                InputStreamReader isr = new InputStreamReader(is);
-
-                //Retrieve data and return it as String
-                int data = isr.read();
-                String content = "";
-                char ch;
-                while (data != -1) {
-                    ch = (char) data;
-                    content = content + ch;
-                    data = isr.read();
-                }
-                return content;
-
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            return null;
-        }
-    }
 
     //NASCONDE LA TASTIERA
 
@@ -334,65 +283,6 @@ public class MainActivity extends AppCompatActivity {
         hideKeyboard(this);
     }
 
-
-
-       /* Weather weather = new Weather();
-
-
-
-        try {
-            ///BHO
-            content = weather.execute("https://api.openweathermap.org/data/2.5/weather?q=" +
-                    cName + "&APPID=fc87ff947ff79d8e26cc89dc744d00bc").get();
-            //First we will check data is retrieve successfully or not
-            Log.d("contentData", content);
-
-            //JSON
-            JSONObject jsonObject = new JSONObject(content);
-            String weatherData = jsonObject.getString("weather");
-            String mainTemperature = jsonObject.getString("main"); //this main is not part of weather array, it's seperate variable like weather
-            double visibility;
-
-            JSONArray array = new JSONArray(weatherData);
-
-            String main = "";
-            String description = "";
-            String temperature = "";
-
-            for (int i = 0; i < array.length(); i++) {
-                JSONObject weatherPart = array.getJSONObject(i);
-                main = weatherPart.getString("main");
-                description = weatherPart.getString("description");
-            }
-
-            JSONObject mainPart = new JSONObject(mainTemperature);
-            temperature = mainPart.getString("temp");
-
-            visibility = Double.parseDouble(jsonObject.getString("visibility"));
-            //By default visibility is in meter
-            int visibilityInKilometer = (int) visibility / 1000;
-
-            Log.i("Temperature", temperature);
-
-
-
-            double t = Double.valueOf(temperature) - 273.15;
-            t = Double.parseDouble(new DecimalFormat("##.##").format(t));
-
-
-            String resultText = "Main :                     " + main +
-                    "\nDescription :        " + description +
-                    "\nTemperature :        " + t + "*C" +
-                    "\nVisibility :              " + visibilityInKilometer + " KM";
-            hideKeyboard(this);
-            result.setText(resultText);
-
-            //Now we will show this result on screen
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }*/
 
 
 
