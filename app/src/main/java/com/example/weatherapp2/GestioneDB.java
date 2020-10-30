@@ -78,6 +78,7 @@ public class GestioneDB {
 public void drop (){
     db.execSQL("DROP TABLE IF EXISTS clienti");
     db.execSQL("DROP TABLE IF EXISTS meteo");
+    DBHelper.onCreate(db);
    }
 
 
