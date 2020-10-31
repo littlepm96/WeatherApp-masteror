@@ -35,7 +35,7 @@ public class Activity3 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_3);
         ArrayList<Meteo> city = new ArrayList<>();
-
+        SQLiteDatabase db = MyDatabase.getInstance(getApplicationContext()).getWritableDatabase();
         Intent intent = getIntent();
         String message = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
         TextView vi = findViewById(R.id.city);
@@ -43,17 +43,30 @@ public class Activity3 extends AppCompatActivity {
 
         String cName = message.toString();
 
-        SQLiteDatabase db = MyDatabase.getInstance(getApplicationContext()).getWritableDatabase();
+
 
         RecyclerView recyclerView =findViewById(R.id.lista);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(new Adapter_meteo(work(cName)));//try work
-
+        recyclerView.setAdapter(new Adapter_meteo(work(cName)));
+        //try work
+        meteoTable.selectAll(db);
         meteoTable.deleteAll(db);
-    };
+
+
+
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        finish();
+    }
+
     public ArrayList<Meteo> work(String cName){
 
-        String url ="http://api.openweathermap.org/data/2.5/forecast?q=" +
+        String url ="http://api.openweathermap.org/data/2.5/forecast?" +
                 cName+"&APPID=fc87ff947ff79d8e26cc89dc744d00bc&lang=it";
        ///http://api.openweathermap.org/data/2.5/forecast?lat=35&lon=139&appid=fc87ff947ff79d8e26cc89dc744d00bc
         final StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
@@ -119,6 +132,7 @@ public class Activity3 extends AppCompatActivity {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+
                 TextView vi=findViewById(R.id.city);
                 vi.setText("That didn't work!");
                 //queue.cancelAll(this);
@@ -130,7 +144,13 @@ public class Activity3 extends AppCompatActivity {
 SQLiteDatabase db = MyDatabase.getInstance(getApplicationContext()).getWritableDatabase();
 ArrayList<Meteo> arrayList;
 arrayList=meteoTable.selectAll(db);
-        return arrayList;
+        meteoTable.deleteAll(db);
+
+
+
+
+          return arrayList;
+
     }
 }
 

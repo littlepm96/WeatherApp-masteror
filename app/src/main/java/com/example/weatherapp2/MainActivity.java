@@ -146,12 +146,16 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, Activity3.class);
 
         EditText editText = (EditText) findViewById(R.id.Ab);
-        String message = editText.getText().toString();
+        String message = "q="+editText.getText().toString();
         intent.putExtra(EXTRA_MESSAGE, message);
 
-        startActivity(intent);
+        startActivityForResult(intent,2);
         hideKeyboard(this);
     }
+
+    //lat=35&lon=139
+
+
 
     //AGGIUNGI A PREFERITI
 
@@ -307,6 +311,16 @@ public class MainActivity extends AppCompatActivity {
             );
         } else {
             getCurrentLocation();
+            String s = "meteo di 5 giorni";
+            Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(this, Activity3.class);
+
+            TextView Text = (TextView) findViewById(R.id.resut);
+            String message = Text.getText().toString();
+            intent.putExtra(EXTRA_MESSAGE, message);
+
+            startActivity(intent);
+
         }
 
     }
@@ -356,7 +370,7 @@ public class MainActivity extends AppCompatActivity {
                     double latitude=locationResult.getLocations().get(latestLocationIndex).getLatitude();
                     double longitude=locationResult.getLocations().get(latestLocationIndex).getLongitude();
 
-                    result.setText(String.format("latitudine:%s\n longitudine:%s",
+                    result.setText(String.format("lat=%s&lon=%s",
                             latitude,longitude
                     )
                     );
