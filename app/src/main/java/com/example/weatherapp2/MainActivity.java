@@ -60,6 +60,8 @@ public class MainActivity extends AppCompatActivity {
     int requestcode = 3;
 String w="";
 
+//TEST
+
 
               //Method for writing data to text file
 
