@@ -259,7 +259,7 @@ public class MainActivity extends AppCompatActivity {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                result.setText("That didn't work!");
+                result.setText("That didn't work! prova ad inserire il nome di una città valido");
                 //queue.cancelAll(this);
             }
         });
@@ -283,6 +283,8 @@ public class MainActivity extends AppCompatActivity {
         String message = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
         EditText editText = (EditText) findViewById(R.id.Ab);
         editText.setText(message);
+        result=findViewById(R.id.resut);
+        result.setText("");
 
 
         ArrayList<String> c=new ArrayList<String>();
@@ -311,15 +313,20 @@ public class MainActivity extends AppCompatActivity {
             );
         } else {
             getCurrentLocation();
-            String s = "meteo di 5 giorni";
-            Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
+
             Intent intent = new Intent(this, Activity3.class);
+            //TextView Text = (TextView) findViewById(R.id.resut);
 
-            TextView Text = (TextView) findViewById(R.id.resut);
-            String message = Text.getText().toString();
-            intent.putExtra(EXTRA_MESSAGE, message);
 
-            startActivity(intent);
+            //String message = Text.getText().toString();
+            if(result.getText().toString().contains("lat=")||result.getText().toString()==null){
+                String s = "meteo di 5 giorni";
+                Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
+            intent.putExtra(EXTRA_MESSAGE, result.getText().toString());
+
+            startActivity(intent);}else{
+                String q= "tap sul bottone posizione un altra volta per il meteo di 5 giorni ";
+                Toast.makeText(this, q, Toast.LENGTH_SHORT).show();}
 
         }
 
