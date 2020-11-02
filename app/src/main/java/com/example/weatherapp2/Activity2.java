@@ -133,18 +133,6 @@ public class Activity2 extends AppCompatActivity {
         db.close();
         finish();
     }
-      /*
-
-
-        String message = Text.getText().toString();
-        String city = message;
-        GestioneDB db= new GestioneDB(getApplicationContext());
-        boolean id;
-        if (!(city.equals(""))){id= db.cancellaPreferito(city);}
-
-*/
-
-
 
     public void setpreferiti(View view) {
         Intent intent = new Intent(this, MainActivity.class);

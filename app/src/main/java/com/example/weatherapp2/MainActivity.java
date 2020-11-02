@@ -59,17 +59,21 @@ public class MainActivity extends AppCompatActivity {
     Context context = this;
     int requestcode = 3;
 String w="";
-    //Method for writing data to text file
 
 
+              //Method for writing data to text file
 
     public String loadJSONFromAsset() {
         String json ;
         try {
-            InputStream is = getResources().openRawResource(R.raw.ez);  //option- in city ci sono 43MB di città di tutto il mondo
-            int size = is.available();                                  //filtrate per Paese(it). il file ez.json contiene solo quelle italiane
-            byte[] buffer = new byte[size];                             //più qualche errore ma è molto meno ingombrante(in caso si ricrea meglio)
-            is.read(buffer);                                            //al momento è in uso City. se si cambia in ez è molto più veloce
+            InputStream is = getResources().openRawResource(R.raw.ez);
+            //option- in city ci sono 43MB di città di tutto il mondo
+            //filtrate per Paese(it). il file ez.json contiene solo quelle italiane
+            //più qualche errore ma è molto meno ingombrante(in caso si ricrea meglio)
+            //al momento è in uso City. se si cambia in ez è molto più veloce
+            int size = is.available();
+            byte[] buffer = new byte[size];
+            is.read(buffer);
             is.close();
             json = new String(buffer, "UTF-8");
         } catch (IOException ex) {
@@ -99,7 +103,7 @@ String w="";
 
     }
 
-    //MENÙ CONTESTUALE IN ALTO A DESTRA
+                //MENÙ CONTESTUALE IN ALTO A DESTRA
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -107,7 +111,8 @@ String w="";
         return super.onCreateOptionsMenu(menu);
     }
 
-    //SCELTA DELLE AZIONI DEI PULSANTI INTERNO AL MENÙ
+                //SCELTA DELLE AZIONI DEI PULSANTI INTERNO AL MENÙ
+
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
@@ -137,7 +142,7 @@ String w="";
             }
         }
     }
-    //CHIAMATA ALLA TERZA VIEW
+                    //CHIAMATA ALLA TERZA VIEW
 
     public void next(View view) {
 
@@ -158,7 +163,7 @@ String w="";
 
 
 
-    //AGGIUNGI A PREFERITI
+                    //AGGIUNGI A PREFERITI
 
     public void addPreferiti(View view) {
         EditText editText = (EditText) findViewById(R.id.Ab);
@@ -177,7 +182,7 @@ String w="";
     }
 
 
-    //NASCONDE LA TASTIERA
+                        //NASCONDE LA TASTIERA
 
     public static void hideKeyboard(Activity activity) {
         InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
@@ -191,7 +196,7 @@ String w="";
     }
 
 
-    //METODO PER LA RICERCA
+                    //METODO PER LA RICERCA
 
     public void search(View view) {
         cityName = findViewById(R.id.Ab);
@@ -199,9 +204,6 @@ String w="";
         result = findViewById(R.id.resut);
 
         String cName = cityName.getText().toString();
-
-
-
 
         String url ="https://api.openweathermap.org/data/2.5/weather?q=" +
                 cName + "&APPID=fc87ff947ff79d8e26cc89dc744d00bc&lang=it";
@@ -238,8 +240,6 @@ String w="";
 
                         Log.i("Temperature", temperature);
 
-
-
                         double t = Double.parseDouble(temperature) - 273.15;
                         t = Double.parseDouble(new DecimalFormat("##.##").format(t));
 
@@ -269,9 +269,6 @@ String w="";
         MyVolley.getInstance(this).getQueue().add(stringRequest);
         hideKeyboard(this);
     }
-
-
-
 
                         //METODO ON_CREATE
 

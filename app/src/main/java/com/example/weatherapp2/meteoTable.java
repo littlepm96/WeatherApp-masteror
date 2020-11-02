@@ -6,12 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 import java.util.ArrayList;
 
-/**
- * NonaLezione
- * Created by leonardo on 2019-11-29.
- * PREGO
- */
-public class meteoTable {/////////////////////////meteoTableTest
+public class meteoTable {
 
     public static final String TABLE = "meteo";
     public static final String ID = "id";

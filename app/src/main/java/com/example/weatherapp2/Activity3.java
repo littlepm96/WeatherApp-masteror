@@ -93,23 +93,9 @@ public class Activity3 extends AppCompatActivity {
                             SQLiteDatabase db = MyDatabase.getInstance(getApplicationContext()).getWritableDatabase();
 
                             //Apertura DB e visualizzazione del contenuto
+
                             for (Meteo meteo : meteos) {
                                 meteoTable.insert(db, meteo);
-
-
-                           /* new Thread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    SQLiteDatabase db = MyDatabase.getInstance(getApplicationContext()).getWritableDatabase();
-
-                                    //Apertura DB e visualizzazione del contenuto
-                                    for (Meteo meteo : meteos) {
-                                        meteoTable.insert(db, meteo);
-                                    }
-                                }
-                            }).start();*/
-
-
 
                         }          ArrayList<Meteo> arrayList;
 

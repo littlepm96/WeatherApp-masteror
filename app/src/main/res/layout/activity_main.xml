@@ -38,20 +38,24 @@
 
     <Button
         android:id="@+id/posizione"
-        android:layout_width="186dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="4dp"
+        android:layout_width="79dp"
+        android:layout_height="65dp"
+        android:layout_marginEnd="52dp"
         android:layout_marginBottom="32dp"
+        android:background="@drawable/compass"
         android:onClick="posizione"
         android:text="@string/la_tua_posizione"
+        android:textColor="#FFFFFF"
         app:layout_constraintBottom_toTopOf="@+id/Ab"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.877" />
 
     <Button
         android:id="@+id/b"
         android:layout_width="120dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="4dp"
+        android:layout_marginEnd="20dp"
         android:onClick="next"
         android:text="@string/prossimi_5_giorni"
         app:layout_constraintBottom_toBottomOf="@+id/searchButton"
@@ -61,27 +65,31 @@
 
     <Button
         android:id="@+id/searchButton"
-        android:layout_width="246dp"
-        android:layout_height="53dp"
+        android:layout_width="218dp"
+        android:layout_height="56dp"
         android:layout_marginTop="36dp"
         android:onClick="search"
 
         android:text="@string/rileva_meteo_ora"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.036"
+        app:layout_constraintEnd_toStartOf="@+id/b"
+        app:layout_constraintHorizontal_bias="0.301"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Ab" />
 
     <Button
         android:id="@+id/StarButton"
-        android:layout_width="202dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="4dp"
+        android:layout_width="86dp"
+        android:layout_height="73dp"
+        android:layout_marginStart="44dp"
         android:layout_marginBottom="32dp"
+        android:background="@drawable/star"
         android:onClick="addPreferiti"
         android:text="@string/aggiungi_ai_preferiti"
+        android:textColor="#FFFFFF"
         app:layout_constraintBottom_toTopOf="@+id/Ab"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.983" />
 </androidx.constraintlayout.widget.ConstraintLayout>

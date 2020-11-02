@@ -6,12 +6,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
 
-/**
- * NonaLezione
- * Created by leonardo on 2019-11-29.
- */
 public class MyDatabase extends SQLiteOpenHelper {
-
 
     private static MyDatabase instance = null;
 
