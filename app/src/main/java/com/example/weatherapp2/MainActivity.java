@@ -58,10 +58,7 @@ public class MainActivity extends AppCompatActivity {
     TextView result;
     Context context = this;
     int requestcode = 3;
-String w="";
-
-//TEST
-
+    String w="";
 
               //Method for writing data to text file
 
