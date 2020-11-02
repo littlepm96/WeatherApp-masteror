@@ -129,6 +129,7 @@ String w="";
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        result.setText("");
         if (requestCode == 3) {
             if (resultCode == RESULT_OK) {
                 String str = data.getStringExtra("key");
@@ -289,7 +290,8 @@ String w="";
         result.setText("");
 
 
-        ArrayList<String> c=new ArrayList<String>();
+    ArrayList<String> c = new ArrayList<String>();
+
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(
                 this,
                 android.R.layout.simple_dropdown_item_1line, arrayListLoad(c)
@@ -327,7 +329,7 @@ String w="";
                 Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
             intent.putExtra(EXTRA_MESSAGE, w);
 
-            startActivity(intent);}else{
+            startActivityForResult(intent,2);}else{
                 String q= "POSIZIONE RILEVATA CORRETTAMENTE: tap sul bottone posizione un altra volta per il meteo di 5 giorni ";
                 Toast.makeText(this, q, Toast.LENGTH_SHORT).show();
                result.setText("...");}
