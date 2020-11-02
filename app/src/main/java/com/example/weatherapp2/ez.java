@@ -58,7 +58,7 @@ public class ez extends AppCompatActivity{
     public ez(ArrayList<String> nomi) {
         this.nomi = nomi;
     }
-
+public ez(){this.nomi=arrayListLoad();}
     public String loadJSONFromAsset() {
         String json = null;
         try {
