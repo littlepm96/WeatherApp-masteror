@@ -1,5 +1,6 @@
 package com.example.weatherapp2;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
@@ -40,8 +41,9 @@ public class Activity3 extends AppCompatActivity {
         Intent intent = getIntent();
         String message = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
         TextView vi = findViewById(R.id.city);
-        String cName = message.toString();
+        String cName = message;
         if(message.contains("q="))message=message.substring(2);
+        if(message.contains("lat="))message="la tua posizione";
         vi.setText(message);
 
 
@@ -62,8 +64,8 @@ public class Activity3 extends AppCompatActivity {
                             JSONObject jsonObject = new JSONObject(response);
                             JSONArray lista = jsonObject.getJSONArray("list");
 
-                            String data = "";
-                            String description = "";
+                            String data ;
+                            String description ;
                             String temperature = "";
 
                             for (int i = 0; i < lista.length(); i++) {
@@ -77,7 +79,7 @@ public class Activity3 extends AppCompatActivity {
 
                                 /////////////////////////////////////////////////////////
 
-                                double t = Double.valueOf(temperature) - 273.15;
+                                double t = Double.parseDouble(temperature) - 273.15;
                                 String s = Double.toString(Double.parseDouble(new DecimalFormat("##.##").format(t)));
                                 //t =Double.parseDouble(new DecimalFormat("##.##").format(t));
                                 //String s=Double.toString(t);
@@ -111,37 +113,31 @@ public class Activity3 extends AppCompatActivity {
 
                         }          ArrayList<Meteo> arrayList;
 
-
-                            RecyclerView recyclerView =findViewById(R.id.lista);
-
-                            recyclerView.setLayoutManager(new LinearLayoutManager(context));
                             arrayList=  meteoTable.selectAll(db);
+                            RecyclerView recyclerView =findViewById(R.id.lista);
+                            recyclerView.setAdapter(new Adapter_meteo(arrayList));
+                            recyclerView.setLayoutManager(new LinearLayoutManager(context));
+
+
                             meteoTable.deleteAll(db);
-                            recyclerView.setAdapter(new Adapter_meteo(arrayList));}
+                            }
                         catch (JSONException e) {
                             e.printStackTrace();
                         }
                     }
                 }, new Response.ErrorListener() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onErrorResponse(VolleyError error) {
 
                 TextView vi=findViewById(R.id.city);
                 vi.setText("That didn't work! prova ad inserire il nome di una città valido");
-                //queue.cancelAll(this);
+
             }
         });
-        //queue.add(stringRequest);
+
         MyVolley.getInstance(this).getQueue().add(stringRequest);
 
-       /* ArrayList<Meteo> arrayList;
-
-
-        RecyclerView recyclerView =findViewById(R.id.lista);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        arrayList=  meteoTable.selectAll(db);
-        meteoTable.deleteAll(db);
-        recyclerView.setAdapter(new Adapter_meteo(arrayList));*/
 
 }}
 

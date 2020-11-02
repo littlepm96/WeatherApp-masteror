@@ -8,88 +8,80 @@
     tools:context=".MainActivity">
 
 
-    <Button
-        android:id="@+id/searchButton"
-        android:layout_width="120dp"
-        android:layout_height="wrap_content"
-        android:onClick="search"
-        android:text="@string/search"
-
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Ab" />
-
-
     <TextView
         android:id="@+id/resut"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="56dp"
         android:padding="8dp"
         android:textColor="#FF000000"
         android:textSize="24sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/searchButton"
-        app:layout_constraintStart_toStartOf="@+id/searchButton"
-        app:layout_constraintTop_toBottomOf="@+id/searchButton" />
-
-
-
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.526"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/b" />
 
     <AutoCompleteTextView
         android:id="@+id/Ab"
-        android:layout_width="202dp"
-        android:layout_height="62dp"
-        android:text=""
-        android:inputType="textPersonName"
-        android:imeOptions="actionNext"
-
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.222" />
-
-    <Button
-        android:id="@+id/b"
-        android:layout_width="61dp"
-        android:layout_height="66dp"
-        android:onClick="next"
-        android:text="@string/button"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/Ab"
-        app:layout_constraintHorizontal_bias="0.372"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.224" />
-
-    <Button
-        android:id="@+id/StarButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/aggiungi_ai_preferiti"
-        android:onClick="addPreferiti"
+        android:hint="@string/inserisci_il_nome_della_citt"
+        android:imeOptions="actionNext"
+        android:inputType="textPersonName"
+        android:text=""
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.098" />
+        app:layout_constraintVertical_bias="0.243" />
 
     <Button
         android:id="@+id/posizione"
-        android:layout_width="72dp"
-        android:layout_height="58dp"
+        android:layout_width="186dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="4dp"
+        android:layout_marginBottom="32dp"
         android:onClick="posizione"
-        android:text="@string/posizione"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="@string/la_tua_posizione"
+        app:layout_constraintBottom_toTopOf="@+id/Ab"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <Button
+        android:id="@+id/b"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="4dp"
+        android:onClick="next"
+        android:text="@string/prossimi_5_giorni"
+        app:layout_constraintBottom_toBottomOf="@+id/searchButton"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.952"
+        app:layout_constraintTop_toBottomOf="@+id/Ab"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <Button
+        android:id="@+id/searchButton"
+        android:layout_width="246dp"
+        android:layout_height="53dp"
+        android:layout_marginTop="36dp"
+        android:onClick="search"
+
+        android:text="@string/rileva_meteo_ora"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.036"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.227" />
+        app:layout_constraintTop_toBottomOf="@+id/Ab" />
+
+    <Button
+        android:id="@+id/StarButton"
+        android:layout_width="202dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginBottom="32dp"
+        android:onClick="addPreferiti"
+        android:text="@string/aggiungi_ai_preferiti"
+        app:layout_constraintBottom_toTopOf="@+id/Ab"
+        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -21,4 +21,8 @@
     <string name="elimina">Elimina</string>
     <string name="cancella_tutti">cancella tutti</string>
     <string name="posizione">posizione</string>
+    <string name="inserisci_il_nome_della_citt">inserisci il nome della città</string>
+    <string name="prossimi_5_giorni">Prossimi 5 giorni</string>
+    <string name="rileva_meteo_ora">rileva meteo ora</string>
+    <string name="la_tua_posizione">la tua posizione</string>
 </resources>

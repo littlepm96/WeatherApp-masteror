@@ -58,13 +58,13 @@ public class MainActivity extends AppCompatActivity {
     TextView result;
     Context context = this;
     int requestcode = 3;
-
+String w="";
     //Method for writing data to text file
 
 
 
     public String loadJSONFromAsset() {
-        String json = null;
+        String json ;
         try {
             InputStream is = getResources().openRawResource(R.raw.ez);  //option- in city ci sono 43MB di città di tutto il mondo
             int size = is.available();                                  //filtrate per Paese(it). il file ez.json contiene solo quelle italiane
@@ -146,6 +146,7 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, Activity3.class);
 
         EditText editText = (EditText) findViewById(R.id.Ab);
+
         String message = "q="+editText.getText().toString();
         intent.putExtra(EXTRA_MESSAGE, message);
 
@@ -171,7 +172,8 @@ public class MainActivity extends AppCompatActivity {
             String s = "Aggiunto ai preferiti!";
             Toast.makeText(context, s, Toast.LENGTH_SHORT).show();
             db.close();
-        }
+        }else{String s = "nulla da aggiungere ai preferiti!";
+            Toast.makeText(context, s, Toast.LENGTH_SHORT).show();}
     }
 
 
@@ -238,7 +240,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-                        double t = Double.valueOf(temperature) - 273.15;
+                        double t = Double.parseDouble(temperature) - 273.15;
                         t = Double.parseDouble(new DecimalFormat("##.##").format(t));
 
 
@@ -319,14 +321,16 @@ public class MainActivity extends AppCompatActivity {
 
 
             //String message = Text.getText().toString();
-            if(result.getText().toString().contains("lat=")||result.getText().toString()==null){
+            //if(result.getText().toString().contains("lat=")||result.getText().toString()==null){
+               if(w.contains("lat=")){
                 String s = "meteo di 5 giorni";
                 Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
-            intent.putExtra(EXTRA_MESSAGE, result.getText().toString());
+            intent.putExtra(EXTRA_MESSAGE, w);
 
             startActivity(intent);}else{
-                String q= "tap sul bottone posizione un altra volta per il meteo di 5 giorni ";
-                Toast.makeText(this, q, Toast.LENGTH_SHORT).show();}
+                String q= "POSIZIONE RILEVATA CORRETTAMENTE: tap sul bottone posizione un altra volta per il meteo di 5 giorni ";
+                Toast.makeText(this, q, Toast.LENGTH_SHORT).show();
+               result.setText("...");}
 
         }
 
@@ -377,10 +381,8 @@ public class MainActivity extends AppCompatActivity {
                     double latitude=locationResult.getLocations().get(latestLocationIndex).getLatitude();
                     double longitude=locationResult.getLocations().get(latestLocationIndex).getLongitude();
 
-                    result.setText(String.format("lat=%s&lon=%s",
-                            latitude,longitude
-                    )
-                    );
+                    //result.setText(String.format("lat=%s&lon=%s", latitude,longitude));
+                    w=(String.format("lat=%s&lon=%s",latitude,longitude));
 
                 }
 
