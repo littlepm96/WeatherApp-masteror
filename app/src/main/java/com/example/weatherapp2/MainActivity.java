@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Build;
 
@@ -171,12 +172,18 @@ String w="";
     public void addPreferiti(View view) {
         EditText editText = (EditText) findViewById(R.id.Ab);
         String message = editText.getText().toString();
+        SQLiteDatabase db = MyDatabase.getInstance(getApplicationContext()).getWritableDatabase();
 
-        GestioneDB db = new GestioneDB(context);
-        db.open();
+        //Apertura DB e visualizzazione del contenuto
+
+
+
+
+
+
         String city = message;
         if (!(city.equals(""))) {
-            long id = db.inserisciPreferito(message);
+            preferitiTable.insert(db,message);
             String s = "Aggiunto ai preferiti!";
             Toast.makeText(context, s, Toast.LENGTH_SHORT).show();
             db.close();

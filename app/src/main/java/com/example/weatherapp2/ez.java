@@ -51,7 +51,7 @@ import java.net.URL;
 import java.text.DecimalFormat;
 
 
-
+//asyncTASK o thread in caso
 public class ez extends AppCompatActivity{
     ArrayList<String> nomi;
 

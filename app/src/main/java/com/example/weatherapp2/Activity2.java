@@ -2,6 +2,7 @@ package com.example.weatherapp2;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -26,73 +27,19 @@ public class Activity2 extends AppCompatActivity {
     private static final String EXTRA_MESSAGE ="com.example.weatherapp2" ;
 
 
-    public  String  loadFromRaw(){
 
-        InputStream is = getResources().openRawResource(R.raw.ez);
-
-        Writer writer = new StringWriter();
-        char[] buffer = new char[1024];
-        try {
-            Reader reader = null;
-            try {
-                reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
-
-                int n;
-                while ((n = reader.read(buffer)) != -1) {
-                    writer.write(buffer, 0, n);
-                }
-            } finally {
-                is.close();
-            }} catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        String jsonString = writer.toString();
-
-
-
-        return  jsonString;
-    }
-
-
-    public String loadJSONFromAsset() {
-        String json = null;
-        try {
-            InputStream is = getResources().openRawResource(R.raw.ez);
-            int size = is.available();
-            byte[] buffer = new byte[size];
-            is.read(buffer);
-            is.close();
-            json = new String(buffer, "UTF-8");
-        } catch (IOException ex) {
-            ex.printStackTrace();
-            return null;
-        }
-        return json;
-    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_2);
-        ArrayList<String> city=new ArrayList<>();
+
+                SQLiteDatabase db = MyDatabase.getInstance(getApplicationContext()).getWritableDatabase();
+
+        //Apertura DB e visualizzazione del contenuto
 
 
+        ArrayList<String> city=  preferitiTable.selectAll(db);
 
-                      // Creazione DATABASE
-
-        GestioneDB db = new GestioneDB(this);
-
-                //Apertura DB e visualizzazione del contenuto
-
-        db.open();
-        Cursor c = db.ottieniTuttiPreferiti();
-        if (c.moveToFirst()) {
-            do {
-                city.add(c.getString(1));
-            } while (c.moveToNext());
-        }
 
 
         Collections.sort(city, new Comparator<String>() {
@@ -114,23 +61,10 @@ public class Activity2 extends AppCompatActivity {
     public void delpreferiti(View view) {
         ArrayList<String> strings=new ArrayList<>();
 
-        GestioneDB db=new GestioneDB(this);
-    db.open();
+        SQLiteDatabase db = MyDatabase.getInstance(getApplicationContext()).getWritableDatabase();
+        preferitiTable.deleteAll(db);
 
 
-        Cursor c = db.ottieniTuttiPreferiti();
-        if (c.moveToFirst()) {
-            do {
-                strings.add(c.getString(1));
-            } while (c.moveToNext());
-        }
-
-        for (String t:strings) {
-            db.cancellaPreferito(t);
-        }
-
-
-        db.close();
         finish();
     }
 
