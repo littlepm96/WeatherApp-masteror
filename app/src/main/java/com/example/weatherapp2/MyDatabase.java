@@ -21,6 +21,8 @@ public class MyDatabase extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         meteoTable.create(db);
+        preferitiTable.create(db);
+
     }
 
     @Override
