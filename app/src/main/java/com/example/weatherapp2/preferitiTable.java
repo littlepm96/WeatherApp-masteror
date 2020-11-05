@@ -8,14 +8,9 @@ import java.util.ArrayList;
 
 public class preferitiTable {
 
-
-
-
-
         public static final String TABLE = "preferiti";
         public static final String ID = "id";
         public static final String CITY = "city";
-
 
         public static void create(SQLiteDatabase database) {
             String sql = "CREATE TABLE preferiti (" +
@@ -61,8 +56,6 @@ public class preferitiTable {
             while(cursor.moveToNext()){
 
                 String p = cursor.getString(cursor.getColumnIndex(CITY));
-
-
 
                 pref.add(p);
             }

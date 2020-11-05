@@ -27,7 +27,6 @@ public class Activity2 extends AppCompatActivity {
     private static final String EXTRA_MESSAGE ="com.example.weatherapp2" ;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,16 +39,12 @@ public class Activity2 extends AppCompatActivity {
 
         ArrayList<String> city=  preferitiTable.selectAll(db);
 
-
-
         Collections.sort(city, new Comparator<String>() {
             @Override
             public int compare(String o1, String o2) {
                 return o1.toString().compareTo(o2.toString());
             }
         });
-
-                                //FINE DB
 
         RecyclerView recyclerView =findViewById(R.id.view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -80,11 +75,7 @@ public class Activity2 extends AppCompatActivity {
 
        // intent.putExtra(EXTRA_MESSAGE, message);
 
-
-
     }
-
-    
 
 }
 

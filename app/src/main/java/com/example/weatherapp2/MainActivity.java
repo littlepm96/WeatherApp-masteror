@@ -83,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
         return json;
 
     }
-
+                    //FILTRO RICERCA
 
     public ArrayList<String> arrayListLoad(ArrayList z) {
 
@@ -123,15 +123,15 @@ public class MainActivity extends AppCompatActivity {
                 break;
 
             case R.id.preferiti:
-
                 Intent intent = new Intent(this, Activity2.class);
-
                 startActivityForResult(intent, requestcode);
                 break;
 
         }
         return super.onOptionsItemSelected(item);
     }
+
+                    // MODIFICA EDITTEXT
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         result.setText("");
@@ -160,9 +160,6 @@ public class MainActivity extends AppCompatActivity {
         hideKeyboard(this);
     }
 
-    //lat=35&lon=139
-
-
 
                     //AGGIUNGI A PREFERITI
 
@@ -173,11 +170,6 @@ public class MainActivity extends AppCompatActivity {
 
         //Apertura DB e visualizzazione del contenuto
 
-
-
-
-
-
         String city = message;
         if (!(city.equals(""))) {
             preferitiTable.insert(db,message);
@@ -187,7 +179,6 @@ public class MainActivity extends AppCompatActivity {
         }else{String s = "nulla da aggiungere ai preferiti!";
             Toast.makeText(context, s, Toast.LENGTH_SHORT).show();}
     }
-
 
                         //NASCONDE LA TASTIERA
 
@@ -203,7 +194,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-                    //METODO PER LA RICERCA
+                    //METODO PER LA RICERCA -> CONNESSIONE API
 
     public void search(View view) {
         cityName = findViewById(R.id.Ab);
@@ -340,7 +331,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
-
+                        //PERMESSI LOCALIZZAZIONE
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
