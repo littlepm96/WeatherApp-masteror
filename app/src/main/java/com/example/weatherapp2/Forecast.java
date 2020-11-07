@@ -27,12 +27,13 @@ import java.util.ArrayList;
 
 public class Forecast extends AppCompatActivity {
     RecyclerView recyclerView;
+    String res;
     Context context = this;
-
+    ArrayList<Meteo> city;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.forecast);
-        ArrayList<Meteo> city = new ArrayList<>();
+
         SQLiteDatabase db = MyDatabase.getInstance(getApplicationContext()).getWritableDatabase();
         Intent intent = getIntent();
         String message = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
@@ -55,66 +56,72 @@ public class Forecast extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-
+                    res=response;
                         new Thread(new Runnable() {
                             @Override
                             public void run() {
-                                //run on ui thread
+
+                                final ArrayList<Meteo> meteos = new ArrayList<>();
+                                try {
+
+                                    JSONObject jsonObject = new JSONObject(res);
+                                    JSONArray lista = jsonObject.getJSONArray("list");
+
+                                    String data;
+                                    String description;
+                                    String temperature = "";
+
+                                    for (int i = 0; i < lista.length(); i++) {
+                                        JSONObject weatherPart = lista.getJSONObject(i);
+                                        data = weatherPart.getString("dt_txt");
+                                        JSONArray bo = weatherPart.getJSONArray("weather");
+                                        JSONObject maint = weatherPart.getJSONObject("main");
+                                        temperature = maint.getString("temp");
+                                        JSONObject desc = bo.getJSONObject(0);
+                                        description = desc.getString("description");
+
+                                        /////////////////////////////////////////////////////////
+
+                                        double t = Double.parseDouble(temperature) - 273.15;
+                                        String s = Double.toString(Double.parseDouble(new DecimalFormat("##.##").format(t)));
+                                        //t =Double.parseDouble(new DecimalFormat("##.##").format(t));
+                                        //String s=Double.toString(t);
+                                        s = s + " C°";
+
+                                        Meteo j = new Meteo(data, description, s);
+
+                                        meteos.add(j);
+                                    }
+
+                                    SQLiteDatabase db = MyDatabase.getInstance(getApplicationContext()).getWritableDatabase();
+
+                                    //Apertura DB e visualizzazione del contenuto
+
+                                    for (Meteo meteo : meteos) {
+                                        MeteoTable.insert(db, meteo);
+
+                                    }
+
+
+                                    city = MeteoTable.selectAll(db);
+
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            recyclerView.setAdapter(new AdapterMeteo(city));
+                                        }
+                                    });
+
+
+
+                                    MeteoTable.deleteAll(db);
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
                             }
                         }).start();
 
-                        final ArrayList<Meteo> meteos = new ArrayList<>();
-                        try {
 
-                            JSONObject jsonObject = new JSONObject(response);
-                            JSONArray lista = jsonObject.getJSONArray("list");
-
-                            String data;
-                            String description;
-                            String temperature = "";
-
-                            for (int i = 0; i < lista.length(); i++) {
-                                JSONObject weatherPart = lista.getJSONObject(i);
-                                data = weatherPart.getString("dt_txt");
-                                JSONArray bo = weatherPart.getJSONArray("weather");
-                                JSONObject maint = weatherPart.getJSONObject("main");
-                                temperature = maint.getString("temp");
-                                JSONObject desc = bo.getJSONObject(0);
-                                description = desc.getString("description");
-
-                                /////////////////////////////////////////////////////////
-
-                                double t = Double.parseDouble(temperature) - 273.15;
-                                String s = Double.toString(Double.parseDouble(new DecimalFormat("##.##").format(t)));
-                                //t =Double.parseDouble(new DecimalFormat("##.##").format(t));
-                                //String s=Double.toString(t);
-                                s = s + " C°";
-
-                                Meteo j = new Meteo(data, description, s);
-
-                                meteos.add(j);
-                            }
-
-                            SQLiteDatabase db = MyDatabase.getInstance(getApplicationContext()).getWritableDatabase();
-
-                            //Apertura DB e visualizzazione del contenuto
-
-                            for (Meteo meteo : meteos) {
-                                MeteoTable.insert(db, meteo);
-
-                            }
-                            ArrayList<Meteo> arrayList;
-
-                            arrayList = MeteoTable.selectAll(db);
-
-                            recyclerView.setAdapter(new AdapterMeteo(arrayList));
-                            recyclerView.setLayoutManager(new LinearLayoutManager(context));
-
-
-                            MeteoTable.deleteAll(db);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
                     }
                 }, new Response.ErrorListener() {
             @SuppressLint("SetTextI18n")
@@ -129,7 +136,7 @@ public class Forecast extends AppCompatActivity {
 
         MyVolley.getInstance(this).getQueue().add(stringRequest);
 
-
+        recyclerView.setLayoutManager(new LinearLayoutManager(context));
     }
 }
 
