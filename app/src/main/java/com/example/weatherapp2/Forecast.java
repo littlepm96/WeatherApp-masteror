@@ -4,11 +4,12 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
-import android.os.AsyncTask;
 import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.util.Log;
 import android.widget.TextView;
 
@@ -21,51 +22,46 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
-public class Activity3 extends AppCompatActivity {
-    RecyclerView recyclerView ;
-    Context context=this;
+public class Forecast extends AppCompatActivity {
+    RecyclerView recyclerView;
+    Context context = this;
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_3);
+        setContentView(R.layout.forecast);
         ArrayList<Meteo> city = new ArrayList<>();
         SQLiteDatabase db = MyDatabase.getInstance(getApplicationContext()).getWritableDatabase();
         Intent intent = getIntent();
         String message = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
         TextView vi = findViewById(R.id.city);
         String cName = message;
-        if(message.contains("q="))message=message.substring(2);
-        if(message.contains("lat="))message="la tua posizione";
+        if (message.contains("q=")) message = message.substring(2);
+        if (message.contains("lat=")) message = "la tua posizione";
         vi.setText(message);
-     recyclerView =findViewById(R.id.lista);
+        recyclerView = findViewById(R.id.lista);
 
 
         Log.d("AAAAAAAAAAAAAAAA", cName);
         //try work
 
 
-        String url ="http://api.openweathermap.org/data/2.5/forecast?"+
-                cName+"&APPID=fc87ff947ff79d8e26cc89dc744d00bc&lang=it";
-       ///http://api.openweathermap.org/data/2.5/forecast?lat=35&lon=139&appid=fc87ff947ff79d8e26cc89dc744d00bc
+        String url = "http://api.openweathermap.org/data/2.5/forecast?" +
+                cName + "&APPID=fc87ff947ff79d8e26cc89dc744d00bc&lang=it";
+        ///http://api.openweathermap.org/data/2.5/forecast?lat=35&lon=139&appid=fc87ff947ff79d8e26cc89dc744d00bc
         final StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
 
-                       new Thread(new Runnable() {
-                           @Override
-                           public void run() {
-                               //run on ui thread
-                           }
-                       }).start();
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                //run on ui thread
+                            }
+                        }).start();
 
                         final ArrayList<Meteo> meteos = new ArrayList<>();
                         try {
@@ -73,8 +69,8 @@ public class Activity3 extends AppCompatActivity {
                             JSONObject jsonObject = new JSONObject(response);
                             JSONArray lista = jsonObject.getJSONArray("list");
 
-                            String data ;
-                            String description ;
+                            String data;
+                            String description;
                             String temperature = "";
 
                             for (int i = 0; i < lista.length(); i++) {
@@ -104,19 +100,19 @@ public class Activity3 extends AppCompatActivity {
                             //Apertura DB e visualizzazione del contenuto
 
                             for (Meteo meteo : meteos) {
-                                meteoTable.insert(db, meteo);
+                                MeteoTable.insert(db, meteo);
 
-                        }          ArrayList<Meteo> arrayList;
+                            }
+                            ArrayList<Meteo> arrayList;
 
-                            arrayList=  meteoTable.selectAll(db);
+                            arrayList = MeteoTable.selectAll(db);
 
-                            recyclerView.setAdapter(new Adapter_meteo(arrayList));
+                            recyclerView.setAdapter(new AdapterMeteo(arrayList));
                             recyclerView.setLayoutManager(new LinearLayoutManager(context));
 
 
-                            meteoTable.deleteAll(db);
-                            }
-                        catch (JSONException e) {
+                            MeteoTable.deleteAll(db);
+                        } catch (JSONException e) {
                             e.printStackTrace();
                         }
                     }
@@ -125,7 +121,7 @@ public class Activity3 extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
 
-                TextView vi=findViewById(R.id.city);
+                TextView vi = findViewById(R.id.city);
                 vi.setText("That didn't work! prova ad inserire il nome di una città valido");
 
             }
@@ -134,7 +130,8 @@ public class Activity3 extends AppCompatActivity {
         MyVolley.getInstance(this).getQueue().add(stringRequest);
 
 
-}}
+    }
+}
 
 
 

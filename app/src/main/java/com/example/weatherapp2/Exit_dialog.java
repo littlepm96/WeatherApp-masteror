@@ -4,11 +4,12 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
-public class exit_dialog extends DialogFragment {
+public class Exit_dialog extends DialogFragment {
 
     @NonNull
     @Override
@@ -24,10 +25,11 @@ public class exit_dialog extends DialogFragment {
         });
         buid.setNegativeButton("Annulla", new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {}
+            public void onClick(DialogInterface dialog, int which) {
+            }
         });
         return buid.create();
-      }
-
     }
+
+}
 

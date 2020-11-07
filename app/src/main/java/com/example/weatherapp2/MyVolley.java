@@ -11,7 +11,7 @@ public class MyVolley {
 
     private static MyVolley instance = null;
 
-    public static MyVolley getInstance(Context context){
+    public static MyVolley getInstance(Context context) {
         return instance == null ? instance = new MyVolley(context) : instance;
     }
 
@@ -20,7 +20,7 @@ public class MyVolley {
         queue = Volley.newRequestQueue(context);
     }
 
-    public RequestQueue getQueue(){
+    public RequestQueue getQueue() {
         return queue;
     }
 }
