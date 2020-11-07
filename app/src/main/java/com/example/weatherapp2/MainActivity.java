@@ -32,6 +32,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.text.DecimalFormat;
 
 import com.android.volley.Request;
@@ -57,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
     int requestcode = 3;
     String lat_long = "";
     InputStream is;
-    ArrayList json;
+    ArrayList<String> json;
 //TEST
 
 
@@ -76,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
             byte[] buffer = new byte[size];
             is.read(buffer);
             is.close();
-            json = new String(buffer, "UTF-8");
+            json = new String(buffer, StandardCharsets.UTF_8);
         } catch (IOException ex) {
             ex.printStackTrace();
             return null;
@@ -87,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public ArrayList<String> arrayListLoad(ArrayList z) {
+    public ArrayList<String> arrayListLoad(ArrayList<String> z) {
         json=null;
         json=z;
         new Thread(new Runnable() {
