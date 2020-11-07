@@ -12,7 +12,6 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 public class AdapterPreferiti extends RecyclerView.Adapter<AdapterPreferiti.ViewHolder> {
-    private static final String EXTRA_MESSAGE = "com.example.weatherapp2";
     private ArrayList<String> strings;
 
     public AdapterPreferiti(ArrayList<String> cities) {
