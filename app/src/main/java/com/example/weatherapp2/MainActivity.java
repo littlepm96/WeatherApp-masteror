@@ -186,8 +186,8 @@ public class MainActivity extends AppCompatActivity {
         //Apertura DB e visualizzazione del contenuto
 
 
-        String city = message;
-        if (!(city.equals(""))) {
+
+        if (!(message.equals(""))) {
             PreferitiTable.insert(db, message);
             String s = "Aggiunto ai preferiti!";
             Toast.makeText(context, s, Toast.LENGTH_SHORT).show();
@@ -228,7 +228,7 @@ public class MainActivity extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        JSONObject jsonObject = null;
+                        JSONObject jsonObject ;
                         try {
                             jsonObject = new JSONObject(response);
 
@@ -240,7 +240,7 @@ public class MainActivity extends AppCompatActivity {
 
                             String main = "";
                             String description = "";
-                            String temperature = "";
+                            String temperature ;
 
                             for (int i = 0; i < array.length(); i++) {
                                 JSONObject weatherPart = array.getJSONObject(i);
