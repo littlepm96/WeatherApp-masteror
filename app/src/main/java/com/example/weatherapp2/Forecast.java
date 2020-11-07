@@ -70,7 +70,7 @@ public class Forecast extends AppCompatActivity {
 
                                     String data;
                                     String description;
-                                    String temperature = "";
+                                    String temperature ;
 
                                     for (int i = 0; i < lista.length(); i++) {
                                         JSONObject weatherPart = lista.getJSONObject(i);
