@@ -66,7 +66,8 @@ public class MainActivity extends AppCompatActivity {
     public String loadJSONFromAsset() {
         String json ;
         try {
-            InputStream is = getResources().openRawResource(R.raw.ez);
+            //InputStream is = getResources().openRawResource(R.raw.ez);
+            InputStream is= getAssets().open("ez.json");
             //option- in city ci sono 43MB di città di tutto il mondo
             //filtrate per Paese(it). il file ez.json contiene solo quelle italiane
             //più qualche errore ma è molto meno ingombrante(in caso si ricrea meglio)
@@ -81,6 +82,7 @@ public class MainActivity extends AppCompatActivity {
             return null;
         }
         return json;
+
 
     }
                     //FILTRO RICERCA
@@ -270,7 +272,6 @@ public class MainActivity extends AppCompatActivity {
 
                         //METODO ON_CREATE
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -279,6 +280,8 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String message = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
         EditText editText = (EditText) findViewById(R.id.Ab);
+
+        ///////////////////////
         editText.setText(message);
         result=findViewById(R.id.resut);
         result.setText("");
@@ -379,7 +382,7 @@ public class MainActivity extends AppCompatActivity {
 
                     //result.setText(String.format("lat=%s&lon=%s", latitude,longitude));
                     w=(String.format("lat=%s&lon=%s",latitude,longitude));
-
+///////////////////////////////////intent
                 }
 
             }

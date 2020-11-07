@@ -31,7 +31,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class Activity3 extends AppCompatActivity {
-
+    RecyclerView recyclerView ;
     Context context=this;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +45,7 @@ public class Activity3 extends AppCompatActivity {
         if(message.contains("q="))message=message.substring(2);
         if(message.contains("lat="))message="la tua posizione";
         vi.setText(message);
+     recyclerView =findViewById(R.id.lista);
 
 
         Log.d("AAAAAAAAAAAAAAAA", cName);
@@ -58,6 +59,14 @@ public class Activity3 extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
+
+                       new Thread(new Runnable() {
+                           @Override
+                           public void run() {
+                               //run on ui thread
+                           }
+                       }).start();
+
                         final ArrayList<Meteo> meteos = new ArrayList<>();
                         try {
 
@@ -100,7 +109,7 @@ public class Activity3 extends AppCompatActivity {
                         }          ArrayList<Meteo> arrayList;
 
                             arrayList=  meteoTable.selectAll(db);
-                            RecyclerView recyclerView =findViewById(R.id.lista);
+
                             recyclerView.setAdapter(new Adapter_meteo(arrayList));
                             recyclerView.setLayoutManager(new LinearLayoutManager(context));
 
