@@ -1,21 +1,22 @@
 package com.example.weatherapp2;
 
-public class meteo {
+public class Meteo {
     private String data;
     private String meteo;
     private String temp;
+    private long id;
 
-    public meteo() {
+    public Meteo() {
     }
 
-    public meteo(String data, String meteo,String  temp) {
+    public Meteo(String data, String meteo, String temp) {
         this.data = data;
-        this.meteo= meteo;
-        this.temp= temp;
+        this.meteo = meteo;
+        this.temp = temp;
 
     }
 
-    public String  getTemp() {
+    public String getTemp() {
         return temp;
     }
 
@@ -37,5 +38,14 @@ public class meteo {
 
     public void setMeteo(String meteo) {
         this.meteo = meteo;
+    }
+
+    public void setId(long res) {
+        this.id = res;
+    }
+
+    public String getId() {
+        return String.valueOf(id);
+
     }
 }

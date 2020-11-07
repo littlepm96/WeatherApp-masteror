@@ -5,16 +5,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context=".Activity2">
+    tools:context=".Preferiti">
 
     <TextView
 
-        android:id="@+id/title"
+        android:id="@+id/nomeCity"
         android:layout_width="193dp"
         android:layout_height="57dp"
-
         android:layout_weight="0.5"
         android:gravity="center"
+        android:textSize="20dp"
+        android:textStyle="bold"
         android:onClick="setpreferiti"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
