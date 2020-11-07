@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
     TextView result;
     Context context = this;
     int requestcode = 3;
-    String w = "";
+    String lat_long = "";
     InputStream is;
     ArrayList json;
 //TEST
@@ -109,7 +109,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }).start();
         z=json;
-        
+
         return z;
 
     }
@@ -380,16 +380,16 @@ public class MainActivity extends AppCompatActivity {
                     double longitude = locationResult.getLocations().get(latestLocationIndex).getLongitude();
 
 
-                    w = (String.format("lat=%s&lon=%s", latitude, longitude));
+                    lat_long = (String.format("lat=%s&lon=%s", latitude, longitude));
 
 
                     Intent intent = new Intent(getApplicationContext(), Forecast.class);
 
 
-                    if (w.contains("lat=")) {
+                    if (lat_long.contains("lat=")) {
                         String s = "meteo di 5 giorni";
                         Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
-                        intent.putExtra(EXTRA_MESSAGE, w);
+                        intent.putExtra(EXTRA_MESSAGE, lat_long);
 
                         startActivityForResult(intent, 2);
                     } else {

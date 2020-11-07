@@ -16,7 +16,7 @@ public class Exit_dialog extends DialogFragment {
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         AlertDialog.Builder buid = new AlertDialog.Builder(getActivity());
 
-        buid.setTitle("Sicuro di voler uscire?").setMessage("Le modifiche non salvate andranno perse");
+        buid.setTitle("Sicuro di voler uscire?").setMessage("");
         buid.setPositiveButton("Chiudi App", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
