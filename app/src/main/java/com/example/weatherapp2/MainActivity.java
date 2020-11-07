@@ -59,7 +59,8 @@ public class MainActivity extends AppCompatActivity {
     AutoCompleteTextView auto;
     String lat_long = "";
     InputStream is;
-    ArrayList<String> json;
+    ArrayList<String> arrayStrings;
+
 //TEST
 
 
@@ -90,8 +91,8 @@ public class MainActivity extends AppCompatActivity {
 
 
     public ArrayList<String> arrayListLoad(ArrayList<String> z) {
-        json=null;
-        json=z;
+        arrayStrings=null;
+        arrayStrings=z;
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -101,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
                     for (int i = 0; i < array.length(); i++) {
                         JSONObject cit = array.getJSONObject(i);
                         if (!(cit.get("country").toString().equals("IT"))) {
-                        } else json.add((String) cit.get("name"));
+                        } else arrayStrings.add((String) cit.get("name"));
                     }
 
                 } catch (JSONException e) {
@@ -110,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
 
             }
         }).start();
-        z=json;
+        z=arrayStrings;
 
         return z;
 
