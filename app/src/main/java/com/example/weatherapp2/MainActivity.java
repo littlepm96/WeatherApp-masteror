@@ -56,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
     TextView result;
     Context context = this;
     int requestcode = 3;
+    AutoCompleteTextView auto;
     String lat_long = "";
     InputStream is;
     ArrayList<String> json;
@@ -294,10 +295,10 @@ public class MainActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         String message = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
-        EditText editText = (EditText) findViewById(R.id.AutoCompleteEdit);
+        auto= findViewById(R.id.AutoCompleteEdit);
 
         ///////////////////////
-        editText.setText(message);
+        auto.setText(message);
         result = findViewById(R.id.result);
         result.setText("");
 
@@ -309,7 +310,7 @@ public class MainActivity extends AppCompatActivity {
                 android.R.layout.simple_dropdown_item_1line, arrayListLoad(c)
 
         );
-        AutoCompleteTextView auto = (AutoCompleteTextView) findViewById(R.id.AutoCompleteEdit);
+
         auto.setAdapter(adapter);
 
 
