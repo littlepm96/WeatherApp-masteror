@@ -13,9 +13,6 @@ import java.util.ArrayList;
 public class AdapterMeteo extends RecyclerView.Adapter<AdapterMeteo.ViewHolder> {
     ArrayList<Meteo> meteo;
 
-    public AdapterMeteo() {
-    }
-
     public AdapterMeteo(ArrayList<Meteo> meteos) {
         this.meteo = meteos;
     }
