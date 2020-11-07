@@ -56,7 +56,8 @@ public class MainActivity extends AppCompatActivity {
     Context context = this;
     int requestcode = 3;
     String w = "";
-
+    InputStream is;
+    ArrayList json;
 //TEST
 
 
@@ -65,8 +66,8 @@ public class MainActivity extends AppCompatActivity {
     public String loadJSONFromAsset() {
         String json;
         try {
-            //InputStream is = getResources().openRawResource(R.raw.ez);
-            InputStream is = getAssets().open("city.json");
+
+             is = getAssets().open("city.json");
             //option- in city ci sono 43MB di città di tutto il mondo
             //filtrate per Paese(it). il file city.json contiene solo quelle italiane
             //più qualche errore ma è molto meno ingombrante(in caso si ricrea meglio)
@@ -87,19 +88,28 @@ public class MainActivity extends AppCompatActivity {
 
 
     public ArrayList<String> arrayListLoad(ArrayList z) {
+        json=null;
+        json=z;
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
 
-        try {
+                    JSONArray array = new JSONArray(loadJSONFromAsset());
+                    for (int i = 0; i < array.length(); i++) {
+                        JSONObject cit = array.getJSONObject(i);
+                        if (!(cit.get("country").toString().equals("IT"))) {
+                        } else json.add((String) cit.get("name"));
+                    }
 
-            JSONArray array = new JSONArray(loadJSONFromAsset());
-            for (int i = 0; i < array.length(); i++) {
-                JSONObject cit = array.getJSONObject(i);
-                if (!(cit.get("country").toString().equals("IT"))) {
-                } else z.add((String) cit.get("name"));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
             }
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        }).start();
+        z=json;
+        
         return z;
 
     }
@@ -296,7 +306,7 @@ public class MainActivity extends AppCompatActivity {
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(
                 this,
                 android.R.layout.simple_dropdown_item_1line, arrayListLoad(c)
-                //arrayListLoad(c) o forse new thead o UI therad
+
         );
         AutoCompleteTextView auto = (AutoCompleteTextView) findViewById(R.id.AutoCompleteEdit);
         auto.setAdapter(adapter);
@@ -319,23 +329,6 @@ public class MainActivity extends AppCompatActivity {
         } else {
             getCurrentLocation();
 
-            Intent intent = new Intent(this, Forecast.class);
-            //TextView Text = (TextView) findViewById(R.id.resut);
-
-
-            //String message = Text.getText().toString();
-            //if(result.getText().toString().contains("lat=")||result.getText().toString()==null){
-            if (w.contains("lat=")) {
-                String s = "meteo di 5 giorni";
-                Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
-                intent.putExtra(EXTRA_MESSAGE, w);
-
-                startActivityForResult(intent, 2);
-            } else {
-                String q = "POSIZIONE RILEVATA CORRETTAMENTE: tap sul bottone posizione un altra volta per il meteo di 5 giorni ";
-                Toast.makeText(this, q, Toast.LENGTH_SHORT).show();
-                result.setText("...");
-            }
 
         }
 
@@ -386,9 +379,26 @@ public class MainActivity extends AppCompatActivity {
                     double latitude = locationResult.getLocations().get(latestLocationIndex).getLatitude();
                     double longitude = locationResult.getLocations().get(latestLocationIndex).getLongitude();
 
-                    //result.setText(String.format("lat=%s&lon=%s", latitude,longitude));
+
                     w = (String.format("lat=%s&lon=%s", latitude, longitude));
-///////////////////////////////////intent
+
+
+                    Intent intent = new Intent(getApplicationContext(), Forecast.class);
+
+
+                    if (w.contains("lat=")) {
+                        String s = "meteo di 5 giorni";
+                        Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
+                        intent.putExtra(EXTRA_MESSAGE, w);
+
+                        startActivityForResult(intent, 2);
+                    } else {
+                        String q = "POSIZIONE NON RILEVATA CORRETTAMENTE: tap sul bottone posizione un altra volta per il meteo di 5 giorni ";
+                        Toast.makeText(getApplicationContext(), q, Toast.LENGTH_SHORT).show();
+                        result.setText("...");
+                    }
+
+
                 }
 
             }

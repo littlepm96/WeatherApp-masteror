@@ -30,11 +30,12 @@ public class Forecast extends AppCompatActivity {
     String res;
     Context context = this;
     ArrayList<Meteo> city;
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.forecast);
 
-        SQLiteDatabase db = MyDatabase.getInstance(getApplicationContext()).getWritableDatabase();
+
         Intent intent = getIntent();
         String message = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
         TextView vi = findViewById(R.id.city);
@@ -56,7 +57,7 @@ public class Forecast extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                    res=response;
+                        res = response;
                         new Thread(new Runnable() {
                             @Override
                             public void run() {
@@ -113,7 +114,6 @@ public class Forecast extends AppCompatActivity {
                                     });
 
 
-
                                     MeteoTable.deleteAll(db);
                                 } catch (JSONException e) {
                                     e.printStackTrace();
@@ -139,7 +139,3 @@ public class Forecast extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
     }
 }
-
-
-
-

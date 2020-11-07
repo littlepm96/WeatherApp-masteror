@@ -17,7 +17,7 @@ public class PreferitiTable {
     public static void create(SQLiteDatabase database) {
         String sql = "CREATE TABLE preferiti (" +
                 ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                CITY + " TEXT " +
+                CITY + " TEXT UNIQUE" +
                 ")";
         database.execSQL(sql);
     }
