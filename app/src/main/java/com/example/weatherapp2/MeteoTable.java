@@ -6,7 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 import java.util.ArrayList;
 
-public class MeteoTable {
+public class meteoTable {
 
     public static final String TABLE = "meteo";
     public static final String ID = "id";
@@ -25,7 +25,7 @@ public class MeteoTable {
         database.execSQL(sql);
     }
 
-    public static void insert(SQLiteDatabase database, Meteo meteo) {
+    public static void insert(SQLiteDatabase database, Meteo meteo){
 
         ContentValues values = new ContentValues();
         values.put(DATA, meteo.getData());
@@ -37,7 +37,7 @@ public class MeteoTable {
         meteo.setId(res);
     }
 
-    public static boolean update(SQLiteDatabase database, Meteo meteo) {
+    public static boolean update(SQLiteDatabase database, Meteo meteo){
         ContentValues values = new ContentValues();
         values.put(DATA, meteo.getData());
         values.put(METEO, meteo.getMeteo());
@@ -52,7 +52,7 @@ public class MeteoTable {
         return database.delete(TABLE, null, null) > 0;
     }
 
-    public static ArrayList<Meteo> selectAll(SQLiteDatabase database) {
+    public static ArrayList<Meteo> selectAll(SQLiteDatabase database){
 
         ArrayList<Meteo> meteos = new ArrayList<>();
 
@@ -61,7 +61,7 @@ public class MeteoTable {
         Cursor cursor = database.rawQuery(sql, null);
         // database.query(TABLE, null, null, null, null, null, NAME);
 
-        while (cursor.moveToNext()) {
+        while(cursor.moveToNext()){
             Meteo meteo = new Meteo();
 
             meteo.setId(cursor.getLong(cursor.getColumnIndex(ID)));
@@ -76,6 +76,5 @@ public class MeteoTable {
         cursor.close();
 
         return meteos;
-    }
-}
+  }  }
 
