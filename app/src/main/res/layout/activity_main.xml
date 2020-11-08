@@ -9,7 +9,7 @@
 
 
     <TextView
-        android:id="@+id/resut"
+        android:id="@+id/result"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="56dp"
@@ -20,10 +20,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.526"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/b" />
+        app:layout_constraintTop_toBottomOf="@+id/forecast" />
 
     <AutoCompleteTextView
-        android:id="@+id/Ab"
+        android:id="@+id/AutoCompleteEdit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="@string/inserisci_il_nome_della_citt"
@@ -46,13 +46,13 @@
         android:onClick="posizione"
         android:text="@string/la_tua_posizione"
         android:textColor="#FFFFFF"
-        app:layout_constraintBottom_toTopOf="@+id/Ab"
+        app:layout_constraintBottom_toTopOf="@+id/AutoCompleteEdit"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.877" />
 
     <Button
-        android:id="@+id/b"
+        android:id="@+id/forecast"
         android:layout_width="120dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="20dp"
@@ -60,7 +60,7 @@
         android:text="@string/prossimi_5_giorni"
         app:layout_constraintBottom_toBottomOf="@+id/searchButton"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Ab"
+        app:layout_constraintTop_toBottomOf="@+id/AutoCompleteEdit"
         app:layout_constraintVertical_bias="1.0" />
 
     <Button
@@ -73,10 +73,10 @@
         android:text="@string/rileva_meteo_ora"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@+id/b"
+        app:layout_constraintEnd_toStartOf="@+id/forecast"
         app:layout_constraintHorizontal_bias="0.301"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Ab" />
+        app:layout_constraintTop_toBottomOf="@+id/AutoCompleteEdit" />
 
     <Button
         android:id="@+id/StarButton"
@@ -88,7 +88,7 @@
         android:onClick="addPreferiti"
         android:text="@string/aggiungi_ai_preferiti"
         android:textColor="#FFFFFF"
-        app:layout_constraintBottom_toTopOf="@+id/Ab"
+        app:layout_constraintBottom_toTopOf="@+id/AutoCompleteEdit"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.983" />
