@@ -6,11 +6,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteDatabase;
-import android.os.AsyncTask;
-import android.os.Build;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -35,6 +32,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.text.DecimalFormat;
 
 import com.android.volley.Request;
@@ -48,7 +46,6 @@ import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 
 import java.util.ArrayList;
-import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends AppCompatActivity {
     private static final int REQUEST_CODE_LOCATION_PEMISSION = 1;
@@ -59,51 +56,67 @@ public class MainActivity extends AppCompatActivity {
     TextView result;
     Context context = this;
     int requestcode = 3;
-    String w="";
+    AutoCompleteTextView auto;
+    String lat_long = "";
+    InputStream is;
+    ArrayList<String> json;
+//TEST
 
-              //Method for writing data to text file
+
+    //Method for writing data to text file
 
     public String loadJSONFromAsset() {
-        String json ;
+        String json;
         try {
-            InputStream is = getResources().openRawResource(R.raw.ez);
+
+             is = getAssets().open("city.json");
             //option- in city ci sono 43MB di città di tutto il mondo
-            //filtrate per Paese(it). il file ez.json contiene solo quelle italiane
+            //filtrate per Paese(it). il file city.json contiene solo quelle italiane
             //più qualche errore ma è molto meno ingombrante(in caso si ricrea meglio)
             //al momento è in uso City. se si cambia in ez è molto più veloce
             int size = is.available();
             byte[] buffer = new byte[size];
             is.read(buffer);
             is.close();
-            json = new String(buffer, "UTF-8");
+            json = new String(buffer, StandardCharsets.UTF_8);
         } catch (IOException ex) {
             ex.printStackTrace();
             return null;
         }
         return json;
 
+
     }
 
 
-    public ArrayList<String> arrayListLoad(ArrayList z) {
+    public ArrayList<String> arrayListLoad(ArrayList<String> z) {
+        json=null;
+        json=z;
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
 
-        try {
+                    JSONArray array = new JSONArray(loadJSONFromAsset());
+                    for (int i = 0; i < array.length(); i++) {
+                        JSONObject cit = array.getJSONObject(i);
+                        if (!(cit.get("country").toString().equals("IT"))) {
+                        } else json.add((String) cit.get("name"));
+                    }
 
-            JSONArray array = new JSONArray(loadJSONFromAsset());
-            for (int i = 0; i < array.length(); i++) {
-                JSONObject cit = array.getJSONObject(i);
-                if (!(cit.get("country").toString().equals("IT"))) {
-                } else z.add((String) cit.get("name"));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
             }
+        }).start();
+        z=json;
 
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
         return z;
 
     }
 
-                //MENÙ CONTESTUALE IN ALTO A DESTRA
+    //MENÙ CONTESTUALE IN ALTO A DESTRA
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -111,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
-                //SCELTA DELLE AZIONI DEI PULSANTI INTERNO AL MENÙ
+    //SCELTA DELLE AZIONI DEI PULSANTI INTERNO AL MENÙ
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -119,12 +132,12 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()) {
 
             case R.id.exit:
-                new exit_dialog().show(getSupportFragmentManager(), "exit");
+                new Exit_dialog().show(getSupportFragmentManager(), "exit");
                 break;
 
             case R.id.preferiti:
 
-                Intent intent = new Intent(this, Activity2.class);
+                Intent intent = new Intent(this, Preferiti.class);
 
                 startActivityForResult(intent, requestcode);
                 break;
@@ -138,36 +151,35 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == 3) {
             if (resultCode == RESULT_OK) {
                 String str = data.getStringExtra("key");
-                EditText editText = (EditText) findViewById(R.id.Ab);
+                EditText editText = (EditText) findViewById(R.id.AutoCompleteEdit);
                 editText.setText(str);
             }
         }
     }
-                    //CHIAMATA ALLA TERZA VIEW
+    //CHIAMATA ALLA TERZA VIEW
 
     public void next(View view) {
 
         String s = "meteo di 5 giorni";
         Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(this, Activity3.class);
+        Intent intent = new Intent(this, Forecast.class);
 
-        EditText editText = (EditText) findViewById(R.id.Ab);
+        EditText editText = (EditText) findViewById(R.id.AutoCompleteEdit);
 
-        String message = "q="+editText.getText().toString();
+        String message = "q=" + editText.getText().toString();
         intent.putExtra(EXTRA_MESSAGE, message);
 
-        startActivityForResult(intent,2);
+        startActivityForResult(intent, 2);
         hideKeyboard(this);
     }
 
     //lat=35&lon=139
 
 
-
-                    //AGGIUNGI A PREFERITI
+    //AGGIUNGI A PREFERITI
 
     public void addPreferiti(View view) {
-        EditText editText = (EditText) findViewById(R.id.Ab);
+        EditText editText = (EditText) findViewById(R.id.AutoCompleteEdit);
         String message = editText.getText().toString();
         SQLiteDatabase db = MyDatabase.getInstance(getApplicationContext()).getWritableDatabase();
 
@@ -175,21 +187,19 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
-
-
-        String city = message;
-        if (!(city.equals(""))) {
-            preferitiTable.insert(db,message);
+        if (!(message.equals(""))) {
+            PreferitiTable.insert(db, message);
             String s = "Aggiunto ai preferiti!";
             Toast.makeText(context, s, Toast.LENGTH_SHORT).show();
             db.close();
-        }else{String s = "nulla da aggiungere ai preferiti!";
-            Toast.makeText(context, s, Toast.LENGTH_SHORT).show();}
+        } else {
+            String s = "nulla da aggiungere ai preferiti!";
+            Toast.makeText(context, s, Toast.LENGTH_SHORT).show();
+        }
     }
 
 
-                        //NASCONDE LA TASTIERA
+    //NASCONDE LA TASTIERA
 
     public static void hideKeyboard(Activity activity) {
         InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
@@ -203,65 +213,64 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-                    //METODO PER LA RICERCA
+    //METODO PER LA RICERCA
 
     public void search(View view) {
-        cityName = findViewById(R.id.Ab);
+        cityName = findViewById(R.id.AutoCompleteEdit);
         searchButton = findViewById(R.id.searchButton);
-        result = findViewById(R.id.resut);
+        result = findViewById(R.id.result);
 
         String cName = cityName.getText().toString();
 
-        String url ="https://api.openweathermap.org/data/2.5/weather?q=" +
+        String url = "https://api.openweathermap.org/data/2.5/weather?q=" +
                 cName + "&APPID=fc87ff947ff79d8e26cc89dc744d00bc&lang=it";
         final StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        JSONObject jsonObject = null;
+                        JSONObject jsonObject ;
                         try {
                             jsonObject = new JSONObject(response);
 
-                        String weatherData = jsonObject.getString("weather");
-                        String mainTemperature = jsonObject.getString("main");
-                        double visibility;
+                            String weatherData = jsonObject.getString("weather");
+                            String mainTemperature = jsonObject.getString("main");
+                            double visibility;
 
-                        JSONArray array = new JSONArray(weatherData);
+                            JSONArray array = new JSONArray(weatherData);
 
-                        String main = "";
-                        String description = "";
-                        String temperature = "";
+                            String main = "";
+                            String description = "";
+                            String temperature ;
 
-                        for (int i = 0; i < array.length(); i++) {
-                            JSONObject weatherPart = array.getJSONObject(i);
-                            main = weatherPart.getString("main");
-                            description = weatherPart.getString("description");
-                        }
+                            for (int i = 0; i < array.length(); i++) {
+                                JSONObject weatherPart = array.getJSONObject(i);
+                                main = weatherPart.getString("main");
+                                description = weatherPart.getString("description");
+                            }
 
-                        JSONObject mainPart = new JSONObject(mainTemperature);
-                        temperature = mainPart.getString("temp");
+                            JSONObject mainPart = new JSONObject(mainTemperature);
+                            temperature = mainPart.getString("temp");
 
-                        visibility = Double.parseDouble(jsonObject.getString("visibility"));
-                        //By default visibility is in meter
-                        int visibilityInKilometer = (int) visibility / 1000;
+                            visibility = Double.parseDouble(jsonObject.getString("visibility"));
+                            //By default visibility is in meter
+                            int visibilityInKilometer = (int) visibility / 1000;
 
-                        Log.i("Temperature", temperature);
+                            Log.i("Temperature", temperature);
 
-                        double t = Double.parseDouble(temperature) - 273.15;
-                        t = Double.parseDouble(new DecimalFormat("##.##").format(t));
+                            double t = Double.parseDouble(temperature) - 273.15;
+                            t = Double.parseDouble(new DecimalFormat("##.##").format(t));
 
 
-                        String resultText = "Main :                     " + main +
-                                "\nDescription :        " + description +
-                                "\nTemperature :        " + t + "*C" +
-                                "\nVisibility :              " + visibilityInKilometer + " KM";
+                            String resultText = "Main :                     " + main +
+                                    "\nDescription :        " + description +
+                                    "\nTemperature :        " + t + "*C" +
+                                    "\nVisibility :              " + visibilityInKilometer + " KM";
                             result.setText(resultText);
 
 
+                        } catch (JSONException e) {
+                            e.printStackTrace();
                         }
-                        catch (JSONException e) {
-                        e.printStackTrace();
-                    }
 
 
                     }
@@ -277,9 +286,8 @@ public class MainActivity extends AppCompatActivity {
         hideKeyboard(this);
     }
 
-                        //METODO ON_CREATE
+    //METODO ON_CREATE
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -287,20 +295,22 @@ public class MainActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         String message = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
-        EditText editText = (EditText) findViewById(R.id.Ab);
-        editText.setText(message);
-        result=findViewById(R.id.resut);
+        auto= findViewById(R.id.AutoCompleteEdit);
+
+        ///////////////////////
+        auto.setText(message);
+        result = findViewById(R.id.result);
         result.setText("");
 
 
-    ArrayList<String> c = new ArrayList<String>();
+        ArrayList<String> c = new ArrayList<String>();
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(
                 this,
                 android.R.layout.simple_dropdown_item_1line, arrayListLoad(c)
-                //arrayListLoad(c) o forse new thead o UI therad
-         );
-        AutoCompleteTextView auto = (AutoCompleteTextView) findViewById(R.id.Ab);
+
+        );
+
         auto.setAdapter(adapter);
 
 
@@ -321,21 +331,6 @@ public class MainActivity extends AppCompatActivity {
         } else {
             getCurrentLocation();
 
-            Intent intent = new Intent(this, Activity3.class);
-            //TextView Text = (TextView) findViewById(R.id.resut);
-
-
-            //String message = Text.getText().toString();
-            //if(result.getText().toString().contains("lat=")||result.getText().toString()==null){
-               if(w.contains("lat=")){
-                String s = "meteo di 5 giorni";
-                Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
-            intent.putExtra(EXTRA_MESSAGE, w);
-
-            startActivityForResult(intent,2);}else{
-                String q= "POSIZIONE RILEVATA CORRETTAMENTE: tap sul bottone posizione un altra volta per il meteo di 5 giorni ";
-                Toast.makeText(this, q, Toast.LENGTH_SHORT).show();
-               result.setText("...");}
 
         }
 
@@ -357,7 +352,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void getCurrentLocation() {
-        final TextView result = findViewById(R.id.resut);
+        final TextView result = findViewById(R.id.result);
         final LocationRequest locationRequest = new LocationRequest();
         locationRequest.setInterval(10000);
         locationRequest.setFastestInterval(3000);
@@ -381,13 +376,30 @@ public class MainActivity extends AppCompatActivity {
 
                 LocationServices.getFusedLocationProviderClient(MainActivity.this).removeLocationUpdates(this);
 
-                if(locationResult!=null && locationResult.getLocations().size()>0){
-                    int latestLocationIndex=locationResult.getLocations().size()-1;
-                    double latitude=locationResult.getLocations().get(latestLocationIndex).getLatitude();
-                    double longitude=locationResult.getLocations().get(latestLocationIndex).getLongitude();
+                if (locationResult != null && locationResult.getLocations().size() > 0) {
+                    int latestLocationIndex = locationResult.getLocations().size() - 1;
+                    double latitude = locationResult.getLocations().get(latestLocationIndex).getLatitude();
+                    double longitude = locationResult.getLocations().get(latestLocationIndex).getLongitude();
 
-                    //result.setText(String.format("lat=%s&lon=%s", latitude,longitude));
-                    w=(String.format("lat=%s&lon=%s",latitude,longitude));
+
+                    lat_long = (String.format("lat=%s&lon=%s", latitude, longitude));
+
+
+                    Intent intent = new Intent(getApplicationContext(), Forecast.class);
+
+
+                    if (lat_long.contains("lat=")) {
+                        String s = "meteo di 5 giorni";
+                        Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
+                        intent.putExtra(EXTRA_MESSAGE, lat_long);
+
+                        startActivityForResult(intent, 2);
+                    } else {
+                        String q = "POSIZIONE NON RILEVATA CORRETTAMENTE: tap sul bottone posizione un altra volta per il meteo di 5 giorni ";
+                        Toast.makeText(getApplicationContext(), q, Toast.LENGTH_SHORT).show();
+                        result.setText("...");
+                    }
+
 
                 }
 

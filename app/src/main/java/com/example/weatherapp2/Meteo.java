@@ -9,14 +9,14 @@ public class Meteo {
     public Meteo() {
     }
 
-    public Meteo(String data, String meteo, String  temp) {
+    public Meteo(String data, String meteo, String temp) {
         this.data = data;
-        this.meteo= meteo;
-        this.temp= temp;
+        this.meteo = meteo;
+        this.temp = temp;
 
     }
 
-    public String  getTemp() {
+    public String getTemp() {
         return temp;
     }
 
@@ -41,10 +41,11 @@ public class Meteo {
     }
 
     public void setId(long res) {
-        this.id=res;
+        this.id = res;
     }
 
-    public String getId() {return String.valueOf(id);
+    public String getId() {
+        return String.valueOf(id);
 
     }
 }
